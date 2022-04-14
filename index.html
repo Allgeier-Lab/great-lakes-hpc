@@ -376,6 +376,66 @@ pre code {
 </div>
 <div id="code" class="section level2">
 <h2>Code</h2>
+<pre class="bash"><code>## General HPC/Account information
+
+alias partitions_info=&#39;sinfo --sum&#39;
+alias jobs_standard=&#39;squeue --partition=standard --format=&quot;%.12i %.18j %.8u %.6a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;
+alias jobs_largemem=&#39;squeue --partition=largemem --format=&quot;%.12i %.18j %.8u %.6a  %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;
+alias account_info=&#39;sacctmgr show assoc user=$USER format=cluster,account,QOS,user,MaxSubmit,MaxJobs,GrpTRES&#39;
+
+alias fairshare=&#39;sshare -U $USER&#39;
+
+
+## Information submitted jobs
+
+alias jobs_own=&#39;squeue -u $USER --format=&quot;%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;
+alias jobs_run=&#39;squeue -u $USER --states=RUNNING --format=&quot;%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;
+alias jobs_pen=&#39;squeue -u $USER --states=PENDING --format=&quot;%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;
+alias jobs_n=&#39;squeue -u $USER --states=RUNNING --noheader | wc -l&#39;
+alias jobs_kill=&#39;scancel -u $USER&#39;
+alias jobs_info=&#39;sacct -u $USER --units=G --format=JobID,JobName,Account,Partition,Timelimit,Elapsed,AllocNodes,AllocCPU,ReqMem,MaxRSS,State&#39;
+
+
+## Delete file types
+
+alias rm_logs=&#39;rm -rf *.log&#39;
+alias rm_future=&#39;rm -rf .future/&#39;
+alias rm_rds=&#39;rm -rf *.rds&#39;
+alias rm_rslurm=&#39;rm -rf _rslurm_*&#39;
+
+
+## various
+
+alias reload_bash=&#39;source ~/.bash_profile&#39;
+alias monitor=&#39;htop -u $USER&#39;
+
+alias ls=&#39;ls -l&#39;
+alias lsa=&#39;ls -l -a&#39;</code></pre>
+<pre class="bash"><code>## Load modules
+
+module load gcc/8.2.0
+module load R/4.1.0
+
+module load gdal
+module load proj
+module load geos</code></pre>
+<pre class="bash"><code>#!/bin/sh
+#SBATCH --account={{ account | jeallg1 }} # account
+#SBATCH --job-name={{ job_name }} # job name
+#SBATCH --array=1-{{ n_jobs }} # number of processes
+#SBATCH --partition={{ partition | standard }} # name of queue
+#SBATCH --nodes={{ nodes | 1 }} # if one load, is out on one node
+#SBATCH --cpus-per-task={{ n_cpu | 1 }} # set cores per task
+#SBATCH --mem-per-cpu={{ mem_cpu | 1024 }} # memory per cpu 
+#SBATCH --time={{ walltime | 12:00:00 }} # walltime in hh:mm:ss
+#SBATCH --output={{ log_file | /dev/null }}
+#SBATCH --error={{ log_file | /dev/null }}
+
+module load gcc/8.2.0
+module load R/4.0.2
+
+ulimit -v $(( 1024 * {{ mem_cpu | 1024 }} ))
+CMQ_AUTH={{ auth }} R --no-save --no-restore -e &#39;clustermq:::worker(&quot;{{ master }}&quot;)&#39;</code></pre>
 </div>
 
 
