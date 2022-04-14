@@ -23,8 +23,7 @@ jobs:
 
       - uses: r-lib/actions/setup-renv@v1
       
-      - name: Install rmarkdown
-        run: Rscript -e 'install.packages("rmarkdown")'
+      - uses: lc5415/rmarkdown-action@v1
       
       - name: Render Rmarkdown files
         run: |
