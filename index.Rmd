@@ -8,7 +8,7 @@ date: "`r Sys.Date()`"
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
 
 ## Get accsess to HPC 
@@ -22,3 +22,73 @@ knitr::opts_chunk$set(echo = TRUE)
 ## rslurm template
 
 ## Code
+
+
+```{bash aliases}
+## General HPC/Account information
+
+alias partitions_info='sinfo --sum'
+alias jobs_standard='squeue --partition=standard --format="%.12i %.18j %.8u %.6a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
+alias jobs_largemem='squeue --partition=largemem --format="%.12i %.18j %.8u %.6a  %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
+alias account_info='sacctmgr show assoc user=$USER format=cluster,account,QOS,user,MaxSubmit,MaxJobs,GrpTRES'
+
+alias fairshare='sshare -U $USER'
+
+
+## Information submitted jobs
+
+alias jobs_own='squeue -u $USER --format="%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
+alias jobs_run='squeue -u $USER --states=RUNNING --format="%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
+alias jobs_pen='squeue -u $USER --states=PENDING --format="%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
+alias jobs_n='squeue -u $USER --states=RUNNING --noheader | wc -l'
+alias jobs_kill='scancel -u $USER'
+alias jobs_info='sacct -u $USER --units=G --format=JobID,JobName,Account,Partition,Timelimit,Elapsed,AllocNodes,AllocCPU,ReqMem,MaxRSS,State'
+
+
+## Delete file types
+
+alias rm_logs='rm -rf *.log'
+alias rm_future='rm -rf .future/'
+alias rm_rds='rm -rf *.rds'
+alias rm_rslurm='rm -rf _rslurm_*'
+
+
+## various
+
+alias reload_bash='source ~/.bash_profile'
+alias monitor='htop -u $USER'
+
+alias ls='ls -l'
+alias lsa='ls -l -a'
+```
+
+```{bash modules}
+## Load modules
+
+module load gcc/8.2.0
+module load R/4.1.0
+
+module load gdal
+module load proj
+module load geos
+```
+
+```{bash rslurm_template}
+#!/bin/sh
+#SBATCH --account={{ account | jeallg1 }} # account
+#SBATCH --job-name={{ job_name }} # job name
+#SBATCH --array=1-{{ n_jobs }} # number of processes
+#SBATCH --partition={{ partition | standard }} # name of queue
+#SBATCH --nodes={{ nodes | 1 }} # if one load, is out on one node
+#SBATCH --cpus-per-task={{ n_cpu | 1 }} # set cores per task
+#SBATCH --mem-per-cpu={{ mem_cpu | 1024 }} # memory per cpu 
+#SBATCH --time={{ walltime | 12:00:00 }} # walltime in hh:mm:ss
+#SBATCH --output={{ log_file | /dev/null }}
+#SBATCH --error={{ log_file | /dev/null }}
+
+module load gcc/8.2.0
+module load R/4.0.2
+
+ulimit -v $(( 1024 * {{ mem_cpu | 1024 }} ))
+CMQ_AUTH={{ auth }} R --no-save --no-restore -e 'clustermq:::worker("{{ master }}")'
+```
