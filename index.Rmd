@@ -11,56 +11,21 @@ date: "`r Sys.Date()`"
 knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
 
-## Get accsess to HPC 
+## Get accsess to HPC
 
-## Modules 
+First you need to get access to the HPC. For this, use [this link](https://teamdynamix.umich.edu/TDClient/30/Portal/Requests/ServiceDet?ID=42) and complete the form to enable your U-Mich account to login to the HPC. 
 
-## Install packages
+Also, talk to Jake about which funding to use. He can additionally send an e-mail to the support team to add your account to the [U-M Research Computing Package](https://arc.umich.edu/umrcp/) which allows to use a certain amount of free-of-cost minutes. Maybe you are even eligible for your own free-of-costs minutes.
 
-## Aliases
+Once you have an account, use your Terminal.app to login to the HPC. For this use the following line. When asked to type your password, the cursor will not move! Make sure to have your 2-factor authentication ready (DuoMobile).
 
-## rslurm template
-
-## Code
-
-
-```{bash aliases}
-## General HPC/Account information
-
-alias partitions_info='sinfo --sum'
-alias jobs_standard='squeue --partition=standard --format="%.12i %.18j %.8u %.6a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
-alias jobs_largemem='squeue --partition=largemem --format="%.12i %.18j %.8u %.6a  %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
-alias account_info='sacctmgr show assoc user=$USER format=cluster,account,QOS,user,MaxSubmit,MaxJobs,GrpTRES'
-
-alias fairshare='sshare -U $USER'
-
-
-## Information submitted jobs
-
-alias jobs_own='squeue -u $USER --format="%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
-alias jobs_run='squeue -u $USER --states=RUNNING --format="%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
-alias jobs_pen='squeue -u $USER --states=PENDING --format="%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
-alias jobs_n='squeue -u $USER --states=RUNNING --noheader | wc -l'
-alias jobs_kill='scancel -u $USER'
-alias jobs_info='sacct -u $USER --units=G --format=JobID,JobName,Account,Partition,Timelimit,Elapsed,AllocNodes,AllocCPU,ReqMem,MaxRSS,State'
-
-
-## Delete file types
-
-alias rm_logs='rm -rf *.log'
-alias rm_future='rm -rf .future/'
-alias rm_rds='rm -rf *.rds'
-alias rm_rslurm='rm -rf _rslurm_*'
-
-
-## various
-
-alias reload_bash='source ~/.bash_profile'
-alias monitor='htop -u $USER'
-
-alias ls='ls -l'
-alias lsa='ls -l -a'
+```{bash ssh}
+ssh <username>@greatlakes.arc-ts.umich.edu
 ```
+
+## Setup your HPC account
+
+- Setup modules
 
 ```{bash modules}
 ## Load modules
@@ -72,6 +37,41 @@ module load gdal
 module load proj
 module load geos
 ```
+
+- Setup aliases
+
+```{bash aliases}
+## General HPC/Account information
+alias partitions_info='sinfo --sum'
+alias jobs_standard='squeue --partition=standard --format="%.12i %.18j %.8u %.6a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
+alias jobs_largemem='squeue --partition=largemem --format="%.12i %.18j %.8u %.6a  %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
+alias account_info='sacctmgr show assoc user=$USER format=cluster,account,QOS,user,MaxSubmit,MaxJobs,GrpTRES'
+
+alias fairshare='sshare -U $USER'
+
+## Information submitted jobs
+alias jobs_own='squeue -u $USER --format="%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
+alias jobs_run='squeue -u $USER --states=RUNNING --format="%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
+alias jobs_pen='squeue -u $USER --states=PENDING --format="%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
+alias jobs_n='squeue -u $USER --states=RUNNING --noheader | wc -l'
+alias jobs_kill='scancel -u $USER'
+alias jobs_info='sacct -u $USER --units=G --format=JobID,JobName,Account,Partition,Timelimit,Elapsed,AllocNodes,AllocCPU,ReqMem,MaxRSS,State'
+
+## Delete file types
+alias rm_logs='rm -rf *.log'
+alias rm_rds='rm -rf *.rds'
+alias rm_rslurm='rm -rf _rslurm_*'
+```
+
+## Install R packages on the HPC
+
+You need to install all `R` packages that you want to use on the HPC once. For this, login to the HPC and start a `R` session in the terminal by typing `R`. Now, simply run `install.packages(c("package_name_1, package_name_2"))` to install all packages you need. The first time you run the command, it might prompt you a question if you want to create your own libraries folder. Say yes to this. Also, you need to select a CRAN mirror. Just pick any number during the corresponding prompt message.
+
+You need to re-do this step each time you want to run some code with a new package you have not installed previously.
+
+Once you have installed all packages, exit the `R` session by typing `Q()` (...and do not save your workspace image by pressing `n`...).
+
+## rslurm template
 
 ```{bash rslurm_template}
 #!/bin/sh
@@ -92,3 +92,5 @@ module load R/4.0.2
 ulimit -v $(( 1024 * {{ mem_cpu | 1024 }} ))
 CMQ_AUTH={{ auth }} R --no-save --no-restore -e 'clustermq:::worker("{{ master }}")'
 ```
+
+## Code example

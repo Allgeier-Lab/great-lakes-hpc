@@ -5,11 +5,11 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 <!-- badges: end -->
 
-This repository contains guidance for using the Great Lakes HPC cluster at the University of Michigan. 
+This repository contains guidance for using the [Great Lakes HPC cluster](https://arc.umich.edu/greatlakes/) at the University of Michigan. 
 
 The rendered site can be found at [https://allgeier-lab.github.io/great-lakes-hpc/](https://allgeier-lab.github.io/great-lakes-hpc/). 
 
-To contribute, please modify `index.Rmd`.
+To contribute, please modify [`index.Rmd`](index.Rmd).
 
 ## Code of Conduct
 
