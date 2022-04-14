@@ -1,13 +1,13 @@
-# Workflow derived from https://github.com/r-lib/actions/tree/master/examples
+ Workflow derived from https://github.com/r-lib/actions/tree/master/examples
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
     paths: ['index.Rmd']
 
-name: render-index
+name: render-rmarkdown
 
 jobs:
-  render-readme:
+  render-rmarkdown:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -20,15 +20,15 @@ jobs:
       - uses: r-lib/actions/setup-pandoc@v1
 
       - uses: r-lib/actions/setup-r@v1
-
-      - uses: r-lib/actions/setup-r-dependencies@v1
         with:
           extra-packages: rmarkdown
 
-      - name: Render README files
+      - uses: r-lib/actions/setup-renv@v1
+      
+      - name: Render index.Rmd file
         run: Rscript -e 'rmarkdown::render("index.Rmd")'
-
-      - name: Commit README
+        
+      - name: Commit results
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
