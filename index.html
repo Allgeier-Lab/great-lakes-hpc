@@ -361,56 +361,16 @@ pre code {
 
 <div id="get-accsess-to-hpc" class="section level2">
 <h2>Get accsess to HPC</h2>
+<p>First you need to get access to the HPC. For this, use <a href="https://teamdynamix.umich.edu/TDClient/30/Portal/Requests/ServiceDet?ID=42">this link</a> and complete the form to enable your U-Mich account to login to the HPC.</p>
+<p>Also, talk to Jake about which funding to use. He can additionally send an e-mail to the support team to add your account to the <a href="https://arc.umich.edu/umrcp/">U-M Research Computing Package</a> which allows to use a certain amount of free-of-cost minutes. Maybe you are even eligible for your own free-of-costs minutes.</p>
+<p>Once you have an account, use your Terminal.app to login to the HPC. For this use the following line. When asked to type your password, the cursor will not move! Make sure to have your 2-factor authentication ready (DuoMobile).</p>
+<pre class="bash"><code>ssh &lt;username&gt;@greatlakes.arc-ts.umich.edu</code></pre>
 </div>
-<div id="modules" class="section level2">
-<h2>Modules</h2>
-</div>
-<div id="install-packages" class="section level2">
-<h2>Install packages</h2>
-</div>
-<div id="aliases" class="section level2">
-<h2>Aliases</h2>
-</div>
-<div id="rslurm-template" class="section level2">
-<h2>rslurm template</h2>
-</div>
-<div id="code" class="section level2">
-<h2>Code</h2>
-<pre class="bash"><code>## General HPC/Account information
-
-alias partitions_info=&#39;sinfo --sum&#39;
-alias jobs_standard=&#39;squeue --partition=standard --format=&quot;%.12i %.18j %.8u %.6a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;
-alias jobs_largemem=&#39;squeue --partition=largemem --format=&quot;%.12i %.18j %.8u %.6a  %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;
-alias account_info=&#39;sacctmgr show assoc user=$USER format=cluster,account,QOS,user,MaxSubmit,MaxJobs,GrpTRES&#39;
-
-alias fairshare=&#39;sshare -U $USER&#39;
-
-
-## Information submitted jobs
-
-alias jobs_own=&#39;squeue -u $USER --format=&quot;%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;
-alias jobs_run=&#39;squeue -u $USER --states=RUNNING --format=&quot;%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;
-alias jobs_pen=&#39;squeue -u $USER --states=PENDING --format=&quot;%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;
-alias jobs_n=&#39;squeue -u $USER --states=RUNNING --noheader | wc -l&#39;
-alias jobs_kill=&#39;scancel -u $USER&#39;
-alias jobs_info=&#39;sacct -u $USER --units=G --format=JobID,JobName,Account,Partition,Timelimit,Elapsed,AllocNodes,AllocCPU,ReqMem,MaxRSS,State&#39;
-
-
-## Delete file types
-
-alias rm_logs=&#39;rm -rf *.log&#39;
-alias rm_future=&#39;rm -rf .future/&#39;
-alias rm_rds=&#39;rm -rf *.rds&#39;
-alias rm_rslurm=&#39;rm -rf _rslurm_*&#39;
-
-
-## various
-
-alias reload_bash=&#39;source ~/.bash_profile&#39;
-alias monitor=&#39;htop -u $USER&#39;
-
-alias ls=&#39;ls -l&#39;
-alias lsa=&#39;ls -l -a&#39;</code></pre>
+<div id="setup-your-hpc-account" class="section level2">
+<h2>Setup your HPC account</h2>
+<ul>
+<li>Setup modules</li>
+</ul>
 <pre class="bash"><code>## Load modules
 
 module load gcc/8.2.0
@@ -419,6 +379,38 @@ module load R/4.1.0
 module load gdal
 module load proj
 module load geos</code></pre>
+<ul>
+<li>Setup aliases</li>
+</ul>
+<pre class="bash"><code>## General HPC/Account information
+alias partitions_info=&#39;sinfo --sum&#39;
+alias jobs_standard=&#39;squeue --partition=standard --format=&quot;%.12i %.18j %.8u %.6a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;
+alias jobs_largemem=&#39;squeue --partition=largemem --format=&quot;%.12i %.18j %.8u %.6a  %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;
+alias account_info=&#39;sacctmgr show assoc user=$USER format=cluster,account,QOS,user,MaxSubmit,MaxJobs,GrpTRES&#39;
+
+alias fairshare=&#39;sshare -U $USER&#39;
+
+## Information submitted jobs
+alias jobs_own=&#39;squeue -u $USER --format=&quot;%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;
+alias jobs_run=&#39;squeue -u $USER --states=RUNNING --format=&quot;%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;
+alias jobs_pen=&#39;squeue -u $USER --states=PENDING --format=&quot;%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;
+alias jobs_n=&#39;squeue -u $USER --states=RUNNING --noheader | wc -l&#39;
+alias jobs_kill=&#39;scancel -u $USER&#39;
+alias jobs_info=&#39;sacct -u $USER --units=G --format=JobID,JobName,Account,Partition,Timelimit,Elapsed,AllocNodes,AllocCPU,ReqMem,MaxRSS,State&#39;
+
+## Delete file types
+alias rm_logs=&#39;rm -rf *.log&#39;
+alias rm_rds=&#39;rm -rf *.rds&#39;
+alias rm_rslurm=&#39;rm -rf _rslurm_*&#39;</code></pre>
+</div>
+<div id="install-r-packages-on-the-hpc" class="section level2">
+<h2>Install R packages on the HPC</h2>
+<p>You need to install all <code>R</code> packages that you want to use on the HPC once. For this, login to the HPC and start a <code>R</code> session in the terminal by typing <code>R</code>. Now, simply run <code>install.packages(c(&quot;package_name_1, package_name_2&quot;))</code> to install all packages you need. The first time you run the command, it might prompt you a question if you want to create your own libraries folder. Say yes to this. Also, you need to select a CRAN mirror. Just pick any number during the corresponding prompt message.</p>
+<p>You need to re-do this step each time you want to run some code with a new package you have not installed previously.</p>
+<p>Once you have installed all packages, exit the <code>R</code> session by typing <code>Q()</code> (…and do not save your workspace image by pressing <code>n</code>…).</p>
+</div>
+<div id="rslurm-template" class="section level2">
+<h2>rslurm template</h2>
 <pre class="bash"><code>#!/bin/sh
 #SBATCH --account={{ account | jeallg1 }} # account
 #SBATCH --job-name={{ job_name }} # job name
@@ -436,6 +428,9 @@ module load R/4.0.2
 
 ulimit -v $(( 1024 * {{ mem_cpu | 1024 }} ))
 CMQ_AUTH={{ auth }} R --no-save --no-restore -e &#39;clustermq:::worker(&quot;{{ master }}&quot;)&#39;</code></pre>
+</div>
+<div id="code-example" class="section level2">
+<h2>Code example</h2>
 </div>
 
 
