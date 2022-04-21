@@ -15,9 +15,9 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 
 First you need to get access to the HPC. For this, use [this link](https://teamdynamix.umich.edu/TDClient/30/Portal/Requests/ServiceDet?ID=42) and complete the form to enable your U-Mich account to login to the HPC. 
 
-Also, talk to Jake about which funding to use. He can additionally send an e-mail to the support team to add your account to the [U-M Research Computing Package](https://arc.umich.edu/umrcp/) which allows to use a certain amount of free-of-cost minutes. Maybe you are even eligible for your own free-of-costs minutes.
+Also, talk to your PI about which funding to use. They can additionally send an e-mail to the support team to add your account to the [U-M Research Computing Package](https://arc.umich.edu/umrcp/) which allows to use a certain amount of free-of-cost minutes. Maybe you are even eligible for your own free-of-costs minutes.
 
-Once you have an account, use your Terminal.app to login to the HPC. For this use the following line. When asked to type your password, the cursor will not move! Make sure to have your 2-factor authentication ready (DuoMobile). In case you are not on Campus, you need to use a [VPN](https://its.umich.edu/enterprise/wifi-networks/vpn/getting-started).
+Once you have an account, use your Terminal.app (on macOS) to login to the HPC. For this use the following line. When asked to type your password, the cursor will not move! Make sure to have your 2-factor authentication ready (DuoMobile). In case you are not on Campus, use a [VPN](https://its.umich.edu/enterprise/wifi-networks/vpn/getting-started).
 
 ```{bash ssh}
 ssh <username>@greatlakes.arc-ts.umich.edu
@@ -27,9 +27,9 @@ ssh <username>@greatlakes.arc-ts.umich.edu
 
 If you use the HPC for the first time, you need to setup a few files and settings to make future uses easier. Luckiy, you have to do these steps only once!
 
-First, check out your `.bash_profile` file by typing `nano .bash_profile`. This will either open the file (using a text editor) or create the file if it doesnt exit yet. Copy the following text into the file. To exit the text editor, press `control + x` and agree to saving the file by following the prompts.
+First, check out your `.bash_profile` file by typing `nano .bash_profile`. This will either open the file or create the file if it doesnt exit yet (using a text editor). Copy the following text into the file. To exit the text editor, press `control + x` and agree to saving the file by following the prompts. All this does, is each time checking if the listed following files (`.bash_aliases`, `.bash_modules`) exist and if so load them each time you log in.
 
-```{bash profile
+```{bash profile}
 # .bash_profile
 
 # load aliases
@@ -47,7 +47,7 @@ fi
 # export PATH
 ```
 
-Next, we need to create `.bash_aliases` by again typing `nano .bash_aliases`. Copy the following text into the file and exit/save it as before. This file will create some easy accessible shortcuts/commands. You can always extend this list.  
+Next, we need to create `.bash_aliases` by typing `nano .bash_aliases`. Copy the following text into the file and exit/save it as previously. This file will create some easy accessible shortcuts/commands. You can always extend this list. So for example, to list all current running jobs submitted from your account you need to type `jobs_run` only instead of a very long original command. Be aware, that the aliases are available **after** you logged out and in to the HPC.
 
 ```{bash aliases}
 ## General HPC/Account information
@@ -71,7 +71,7 @@ alias rm_logs='rm -rf *.log'
 alias rm_rds='rm -rf *.rds'
 alias rm_rslurm='rm -rf _rslurm_*'
 ```
-Last, we need to create `.bash_modules`. Again, type `nano .bash_modules` and copy the following text before exit/saving the file. This makes sure, each time you use the HPC some pre-installed software libraries are available (such as e.g. `R`). If you dont use any spatial packages you could delete the lines loading `gdal`, `proj`, and `geos`.
+Last, you need to create `.bash_modules`. Again, type `nano .bash_modules` and copy the following text before exit/saving the file. This makes sure, each time you use the HPC some pre-installed software libraries are available (such as e.g. `R`). If you dont use any spatial packages you could delete the lines loading `gdal`, `proj`, and `geos`. If you need any other additional modules, just add them to this file. Similar the the aliases, these changes will take effect once you logged out and in again after creating the file.
 
 ```{bash modules}
 ## Load modules
@@ -86,11 +86,7 @@ module load geos
 
 ## Install R packages on the HPC
 
-You need to install all `R` packages that you want to use on the HPC once. For this, login to the HPC and start a `R` session in the terminal by typing `R`. Now, simply run `install.packages(c("package_name_1, package_name_2"))` to install all packages you need. The first time you run the command, it might prompt you a question if you want to create your own libraries folder. Say yes to this. Also, you need to select a CRAN mirror. Just pick any number during the corresponding prompt message.
-
-You need to re-do this step each time you want to run some code with a new package you have not installed previously.
-
-Once you have installed all packages, exit the `R` session by typing `Q()` (...and do not save your workspace image by pressing `n`...).
+You need to install all `R` packages that you want to use on the HPC once. For this, login to the HPC and start a `R` session in the terminal by typing `R` (make sure you loaded the corresponding module). Now, simply run `install.packages(c("package_name_1, package_name_2"))` to install all packages you need. The first time you run the command, it might prompt you a question if you want to create your own libraries folder. Say yes to this. Also, you need to select a CRAN mirror. Just pick any number during the corresponding prompt message. You need to re-do this step each time you want to run some code with a new package you have not installed previously. Once you have installed all packages, exit the `R` session by typing `Q()` (...and do not save your workspace image by pressing `n`...).
 
 Thats so far everything we need to setup on the HPC! The next steps are on your local disk again.
 
