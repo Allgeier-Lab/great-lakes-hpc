@@ -12,7 +12,7 @@
 <meta name="author" content="Katrina S. Munsterman" />
 <meta name="author" content="Maximilian H.K. Hesselbarth" />
 
-<meta name="date" content="2022-04-14" />
+<meta name="date" content="2022-04-21" />
 
 <title>Great lakes</title>
 
@@ -354,7 +354,7 @@ pre code {
 <h1 class="title toc-ignore">Great lakes</h1>
 <h4 class="author">Katrina S. Munsterman</h4>
 <h4 class="author">Maximilian H.K. Hesselbarth</h4>
-<h4 class="date">2022-04-14</h4>
+<h4 class="date">2022-04-21</h4>
 
 </div>
 
@@ -363,26 +363,37 @@ pre code {
 <h2>Get accsess to HPC</h2>
 <p>First you need to get access to the HPC. For this, use <a href="https://teamdynamix.umich.edu/TDClient/30/Portal/Requests/ServiceDet?ID=42">this link</a> and complete the form to enable your U-Mich account to login to the HPC.</p>
 <p>Also, talk to Jake about which funding to use. He can additionally send an e-mail to the support team to add your account to the <a href="https://arc.umich.edu/umrcp/">U-M Research Computing Package</a> which allows to use a certain amount of free-of-cost minutes. Maybe you are even eligible for your own free-of-costs minutes.</p>
-<p>Once you have an account, use your Terminal.app to login to the HPC. For this use the following line. When asked to type your password, the cursor will not move! Make sure to have your 2-factor authentication ready (DuoMobile).</p>
+<p>Once you have an account, use your Terminal.app to login to the HPC. For this use the following line. When asked to type your password, the cursor will not move! Make sure to have your 2-factor authentication ready (DuoMobile). In case you are not on Campus, you need to use a <a href="https://its.umich.edu/enterprise/wifi-networks/vpn/getting-started">VPN</a>.</p>
 <pre class="bash"><code>ssh &lt;username&gt;@greatlakes.arc-ts.umich.edu</code></pre>
 </div>
 <div id="setup-your-hpc-account" class="section level2">
 <h2>Setup your HPC account</h2>
-<ul>
-<li>Setup modules</li>
-</ul>
-<pre class="bash"><code>## Load modules
+<p>If you use the HPC for the first time, you need to setup a few files and settings to make future uses easier. Luckiy, you have to do these steps only once!</p>
+<p>First, check out your <code>.bash_profile</code> file by typing <code>nano .bash_profile</code>. This will either open the file (using a text editor) or create the file if it doesnt exit yet. Copy the following text into the file. To exit the text editor, press <code>control + x</code> and agree to saving the file by following the prompts.</p>
+<p>```{bash profile # .bash_profile</p>
+</div>
+<div id="load-aliases" class="section level1">
+<h1>load aliases</h1>
+<p>if [ -f ~/.bash_aliases ]; then . ~/.bash_aliases fi</p>
+</div>
+<div id="load-modules" class="section level1">
+<h1>load modules</h1>
+<p>if [ -f ~/.bash_modules ]; then . ~/.bash_modules fi</p>
+<div id="user-specific-environment-and-startup-programs" class="section level2">
+<h2>User specific environment and startup programs</h2>
+</div>
+</div>
+<div id="pathpathhome.localbinhomebin" class="section level1">
+<h1>PATH=<span class="math inline">\(PATH:\)</span>HOME/.local/bin:$HOME/bin</h1>
+</div>
+<div id="export-path" class="section level1">
+<h1>export PATH</h1>
+<pre><code>
+Next, we need to create `.bash_aliases` by again typing `nano .bash_aliases`. Copy the following text into the file and exit/save it as before. This file will create some easy accessible shortcuts/commands. You can always extend this list.  
 
-module load gcc/8.2.0
-module load R/4.1.0
 
-module load gdal
-module load proj
-module load geos</code></pre>
-<ul>
-<li>Setup aliases</li>
-</ul>
-<pre class="bash"><code>## General HPC/Account information
+```bash
+## General HPC/Account information
 alias partitions_info=&#39;sinfo --sum&#39;
 alias jobs_standard=&#39;squeue --partition=standard --format=&quot;%.12i %.18j %.8u %.6a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;
 alias jobs_largemem=&#39;squeue --partition=largemem --format=&quot;%.12i %.18j %.8u %.6a  %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;
@@ -402,12 +413,21 @@ alias jobs_info=&#39;sacct -u $USER --units=G --format=JobID,JobName,Account,Par
 alias rm_logs=&#39;rm -rf *.log&#39;
 alias rm_rds=&#39;rm -rf *.rds&#39;
 alias rm_rslurm=&#39;rm -rf _rslurm_*&#39;</code></pre>
-</div>
+<p>Last, we need to create <code>.bash_modules</code>. Again, type <code>nano .bash_modules</code> and copy the following text before exit/saving the file. This makes sure, each time you use the HPC some pre-installed software libraries are available (such as e.g. <code>R</code>). If you dont use any spatial packages you could delete the lines loading <code>gdal</code>, <code>proj</code>, and <code>geos</code>.</p>
+<pre class="bash"><code>## Load modules
+
+module load gcc/8.2.0
+module load R/4.1.0
+
+module load gdal
+module load proj
+module load geos</code></pre>
 <div id="install-r-packages-on-the-hpc" class="section level2">
 <h2>Install R packages on the HPC</h2>
 <p>You need to install all <code>R</code> packages that you want to use on the HPC once. For this, login to the HPC and start a <code>R</code> session in the terminal by typing <code>R</code>. Now, simply run <code>install.packages(c(&quot;package_name_1, package_name_2&quot;))</code> to install all packages you need. The first time you run the command, it might prompt you a question if you want to create your own libraries folder. Say yes to this. Also, you need to select a CRAN mirror. Just pick any number during the corresponding prompt message.</p>
 <p>You need to re-do this step each time you want to run some code with a new package you have not installed previously.</p>
 <p>Once you have installed all packages, exit the <code>R</code> session by typing <code>Q()</code> (…and do not save your workspace image by pressing <code>n</code>…).</p>
+<p>Thats so far everything we need to setup on the HPC! The next steps are on your local disk again.</p>
 </div>
 <div id="rslurm-template" class="section level2">
 <h2>rslurm template</h2>
@@ -431,6 +451,7 @@ CMQ_AUTH={{ auth }} R --no-save --no-restore -e &#39;clustermq:::worker(&quot;{{
 </div>
 <div id="code-example" class="section level2">
 <h2>Code example</h2>
+</div>
 </div>
 
 
