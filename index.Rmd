@@ -1,9 +1,11 @@
 ---
-title: "Great lakes"
+title: "How to use the Great Lakes High Performance Cluster"
 author:
   - Katrina S. Munsterman
   - Maximilian H.K. Hesselbarth
-output: html_document
+output:
+  html_document:
+    theme: sketchy
 date: "`r Sys.Date()`"
 ---
 
