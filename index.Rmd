@@ -17,7 +17,7 @@ First you need to get access to the HPC. For this, use [this link](https://teamd
 
 Also, talk to Jake about which funding to use. He can additionally send an e-mail to the support team to add your account to the [U-M Research Computing Package](https://arc.umich.edu/umrcp/) which allows to use a certain amount of free-of-cost minutes. Maybe you are even eligible for your own free-of-costs minutes.
 
-Once you have an account, use your Terminal.app to login to the HPC. For this use the following line. When asked to type your password, the cursor will not move! Make sure to have your 2-factor authentication ready (DuoMobile).
+Once you have an account, use your Terminal.app to login to the HPC. For this use the following line. When asked to type your password, the cursor will not move! Make sure to have your 2-factor authentication ready (DuoMobile). In case you are not on Campus, you need to use a [VPN](https://its.umich.edu/enterprise/wifi-networks/vpn/getting-started).
 
 ```{bash ssh}
 ssh <username>@greatlakes.arc-ts.umich.edu
@@ -25,20 +25,29 @@ ssh <username>@greatlakes.arc-ts.umich.edu
 
 ## Setup your HPC account
 
-- Setup modules
+If you use the HPC for the first time, you need to setup a few files and settings to make future uses easier. Luckiy, you have to do these steps only once!
 
-```{bash modules}
-## Load modules
+First, check out your `.bash_profile` file by typing `nano .bash_profile`. This will either open the file (using a text editor) or create the file if it doesnt exit yet. Copy the following text into the file. To exit the text editor, press `control + x` and agree to saving the file by following the prompts.
 
-module load gcc/8.2.0
-module load R/4.1.0
+```{bash profile
+# .bash_profile
 
-module load gdal
-module load proj
-module load geos
+# load aliases
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# load modules
+if [ -f ~/.bash_modules ]; then
+    . ~/.bash_modules
+fi
+
+## User specific environment and startup programs
+# PATH=$PATH:$HOME/.local/bin:$HOME/bin
+# export PATH
 ```
 
-- Setup aliases
+Next, we need to create `.bash_aliases` by again typing `nano .bash_aliases`. Copy the following text into the file and exit/save it as before. This file will create some easy accessible shortcuts/commands. You can always extend this list.  
 
 ```{bash aliases}
 ## General HPC/Account information
@@ -62,6 +71,18 @@ alias rm_logs='rm -rf *.log'
 alias rm_rds='rm -rf *.rds'
 alias rm_rslurm='rm -rf _rslurm_*'
 ```
+Last, we need to create `.bash_modules`. Again, type `nano .bash_modules` and copy the following text before exit/saving the file. This makes sure, each time you use the HPC some pre-installed software libraries are available (such as e.g. `R`). If you dont use any spatial packages you could delete the lines loading `gdal`, `proj`, and `geos`.
+
+```{bash modules}
+## Load modules
+
+module load gcc/8.2.0
+module load R/4.1.0
+
+module load gdal
+module load proj
+module load geos
+```
 
 ## Install R packages on the HPC
 
@@ -70,6 +91,8 @@ You need to install all `R` packages that you want to use on the HPC once. For t
 You need to re-do this step each time you want to run some code with a new package you have not installed previously.
 
 Once you have installed all packages, exit the `R` session by typing `Q()` (...and do not save your workspace image by pressing `n`...).
+
+Thats so far everything we need to setup on the HPC! The next steps are on your local disk again.
 
 ## rslurm template
 
