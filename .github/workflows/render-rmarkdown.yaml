@@ -21,7 +21,7 @@ jobs:
       - uses: r-lib/actions/setup-renv@v2
       
       - name: Install rmarkdown
-        run: Rscript -e 'install.packages("rmarkdown")'
+        run: Rscript -e 'install.packages(c("rmarkdown", "prettydoc"))'
       
       - name: render index.Rmd
         run: Rscript -e 'rmarkdown::render("index.Rmd")'

@@ -4,8 +4,9 @@ author:
   - Katrina S. Munsterman
   - Maximilian H.K. Hesselbarth
 output:
-  html_document:
-    theme: yeti
+  prettydoc::html_pretty:
+    theme: leonids
+    highlight: github
 date: "`r Sys.Date()`"
 ---
 
@@ -15,8 +16,10 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 
 <!-- badges: start -->
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Github](https://img.shields.io/badge/-GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/Allgeier-Lab/great-lakes-hpc)
+[![License: GPL v3](https://shields.io/badge/License-GPLv3-blue?style=for-the-badge)](https://www.gnu.org/licenses/gpl-3.0)
+[![Github](https://shields.io/badge/Github-Source%20Code-181717?style=for-the-badge&logo=github)](https://github.com/Allgeier-Lab/great-lakes-hpc)
+[![Twitter](https://shields.io/badge/Twitter-@AllgeierLab-489ae9?style=for-the-badge&logo=twitter)](https://twitter.com/AllgeierLab)
+[![Homepage](https://shields.io/badge/Homepage-www.jacoballgeier.com-f7cc46?style=for-the-badge&logo=internetexplorer)](https://www.jacoballgeier.com)
 
 <!-- badges: end -->
 
