@@ -124,4 +124,16 @@ ulimit -v $(( 1024 * {{ mem_cpu | 1024 }} ))
 CMQ_AUTH={{ auth }} R --no-save --no-restore -e 'clustermq:::worker("{{ master }}")'
 ```
 
+## Preparing rslurm_template for submission
+
+  1. make sure that `rslurm_template` is in a folder on your local disk
+  2. for new Rprojects, add `_rslurm_*/` to git ignore, so that git knows not to upload to GitHub
+
+Once you have `rslurm_template` within your local disk, you will need to use a program such as `FileZilla` or `CyberDuck` to copy the rslurm_template to HPC
+  for exmaple on `FileZilla`, go to `File` > `Site Manager` > and log in to HPC
+
+# Submission to HPC
+
+To submit a job to the cluster, type `sbatch submit.sh` in the terminal
+
 ## Code example
