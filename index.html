@@ -13,7 +13,7 @@
 <meta name="author" content="Katrina S. Munsterman" />
 <meta name="author" content="Maximilian H.K. Hesselbarth" />
 
-<meta name="date" content="2022-04-22" />
+<meta name="date" content="2022-05-04" />
 
 <title>How to use the Great Lakes High Performance Cluster</title>
 
@@ -161,7 +161,7 @@ code span.ot { color: #007020; }
 <span class="author_name">How to use the Great Lakes High Performance Cluster</span>
 <span class="author_bio mbm">Katrina S. Munsterman</span>
 <span class="author_bio mbm">Maximilian H.K. Hesselbarth</span>
-<span class="author_bio mbm">2022-04-22</span>
+<span class="author_bio mbm">2022-05-04</span>
 </div>
 </div>
 </div>
@@ -257,8 +257,20 @@ code span.ot { color: #007020; }
 <span id="cb5-16"><a href="#cb5-16"></a><span class="bu">ulimit</span> -v <span class="va">$((</span> 1024 * {{ mem_cpu | 1024 }} <span class="va">))</span></span>
 <span id="cb5-17"><a href="#cb5-17"></a><span class="va">CMQ_AUTH=</span>{<span class="kw">{</span> <span class="ex">auth</span> <span class="kw">}</span>} <span class="ex">R</span> --no-save --no-restore -e <span class="st">&#39;clustermq:::worker(&quot;{{ master }}&quot;)&#39;</span></span></code></pre></div>
 </div>
+<div id="preparing-rslurm_template-for-submission" class="section level2">
+<h2>Preparing rslurm_template for submission</h2>
+<ol style="list-style-type: decimal">
+<li>make sure that <code>rslurm_template</code> is in a folder on your local disk</li>
+<li>for new Rprojects, add <code>_rslurm_*/</code> to git ignore, so that git knows not to upload to GitHub</li>
+</ol>
+<p>Once you have <code>rslurm_template</code> within your local disk, you will need to use a program such as <code>FileZilla</code> or <code>CyberDuck</code> to copy the rslurm_template to HPC for exmaple on <code>FileZilla</code>, go to <code>File</code> &gt; <code>Site Manager</code> &gt; and log in to HPC</p>
+</div>
+<div id="submission-to-hpc" class="section level1">
+<h1>Submission to HPC</h1>
+<p>To submit a job to the cluster, type <code>sbatch submit.sh</code> in the terminal</p>
 <div id="code-example" class="section level2">
 <h2>Code example</h2>
+</div>
 </div>
 </article>
 </div>
