@@ -139,6 +139,8 @@ That's so far everything we need to setup on the HPC! The next steps are on your
 
 Once you have `rslurm_template` within your local disk, you will need to use a program such as `FileZilla` or `CyberDuck` to copy the rslurm_template to HPC for example on `FileZilla`, go to `File` > `Site Manager` > and log in to HPC
 
+File server: sftp://greatlakes-xfer.arc-ts.umich.edu
+
 Run `file.path(R.home("bin"), "Rscript")` on HPC and use returning path as `rscript_path` argument. (Example: `"/sw/arcts/centos7/stacks/gcc/8.2.0/R/4.1.0/lib64/R/bin/Rscript"`)
 
 The file path to the template file must be specified as `sh_template` argument (...maybe not? The template is identical to the default...)
