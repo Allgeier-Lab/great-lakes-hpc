@@ -13,7 +13,7 @@
 <meta name="author" content="Katrina S. Munsterman" />
 <meta name="author" content="Maximilian H.K. Hesselbarth" />
 
-<meta name="date" content="2022-06-28" />
+<meta name="date" content="2022-06-30" />
 
 <title>How to use the Great Lakes High Performance Cluster</title>
 
@@ -159,7 +159,7 @@ code span.ot { color: #007020; }
 Cluster</span>
 <span class="author_bio mbm">Katrina S. Munsterman</span>
 <span class="author_bio mbm">Maximilian H.K. Hesselbarth</span>
-<span class="author_bio mbm">2022-06-28</span>
+<span class="author_bio mbm">2022-06-30</span>
 </div>
 </div>
 </div>
@@ -184,11 +184,11 @@ the <a href="https://arc.umich.edu/umrcp/">U-M Research Computing
 Package</a> which allows to use a certain amount of free-of-cost
 minutes. Maybe you are even eligible for your own free-of-costs
 minutes.</p>
-<p>Once you have an account, use your Terminal.app (on macOS) to login
-to the HPC. For this use the following line. When asked to type your
-password, the cursor will not move! Make sure to have your 2-factor
-authentication ready (DuoMobile). In case you are not on Campus, use a
-<a href="https://its.umich.edu/enterprise/wifi-networks/vpn/getting-started">VPN</a>.</p>
+<p>Once you have an account, use your <em>Terminal.app</em> (on macOS)
+to login to the HPC. For this use the following line. When asked to type
+your password, the cursor will not move! Make sure to have your 2-factor
+authentication ready (<em>DuoMobile</em>). In case you are not on
+Campus, use a <a href="https://its.umich.edu/enterprise/wifi-networks/vpn/getting-started">VPN</a>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="op">&lt;</span>username<span class="op">&gt;</span>@greatlakes.arc-ts.umich.edu</span></code></pre></div>
 </div>
 <div id="setup-your-hpc-account" class="section level2">
@@ -223,6 +223,21 @@ example, to list all current running jobs submitted from your account
 you need to type <code>jobs_run</code> only instead of a very long
 original command. Be aware, that the aliases are available
 <strong>after</strong> you logged out and in to the HPC.</p>
+<p>The most important alias are all <code>jobs_*</code>.</p>
+<p><code>jobs_own</code>: Prints list of all jobs submitted by your
+account</p>
+<p><code>jobs_run</code>: Prints list of all <strong>running</strong>
+jobs submitted by your account</p>
+<p><code>jobs_pen</code>: Prints list of all <strong>pending</strong>
+jobs submitted by your account</p>
+<p><code>jobs_n</code>: Counts all <strong>running</strong> jobs
+submitted by your account</p>
+<p><code>jobs_info</code>: Prints list of all jobs submitted by your
+account including finished ones</p>
+<p><code>jobs_finished</code>: Counts all <strong>finished</strong> jobs
+submitted by your account</p>
+<p><code>jobs_kill</code>: Well…stops all current pending and running
+jobs submitted by your account</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">## General HPC/Account information</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> partitions_info=<span class="st">&#39;sinfo --sum&#39;</span></span>
@@ -278,8 +293,8 @@ show all options.</p>
 <h2>Install R packages on the HPC</h2>
 <p>You need to install all <code>R</code> packages that you want to use
 on the HPC once. For this, login to the HPC and start a <code>R</code>
-session in the terminal by typing <code>R</code> (make sure you loaded
-the corresponding module). Now, simply run
+session in the <em>Terminal</em> by typing <code>R</code> (make sure you
+loaded the corresponding module). Now, simply run
 <code>install.packages(c(&quot;package_name_1, package_name_2&quot;))</code> to
 install all packages you need. The first time you run the command, it
 might prompt you a question if you want to create your own libraries
@@ -289,11 +304,18 @@ re-do this step each time you want to run some code with a new package
 you have not installed previously. Once you have installed all packages,
 exit the <code>R</code> session by typing <code>Q()</code> (…and do not
 save your workspace image by pressing <code>n</code>…).</p>
+<p>Run <code>file.path(R.home(&quot;bin&quot;), &quot;Rscript&quot;)</code> on HPC and use
+the returning path as <code>rscript_path</code> argument. The path
+should be
+<code>&quot;/sw/arcts/centos7/stacks/gcc/8.2.0/R/4.1.0/lib64/R/bin/Rscript&quot;</code>
+for all users. You need this in the
+<code>slurm_apply</code>/<code>slurm_map</code> function in your local
+<code>R</code> session later.</p>
 <p>That’s so far everything we need to setup on the HPC! The next steps
 are on your local disk again.</p>
 </div>
-<div id="rslurm-template" class="section level2">
-<h2>rslurm template</h2>
+<div id="rslurm-template-this-can-be-skipped" class="section level2">
+<h2>rslurm template (This can be skipped)</h2>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=</span><span class="re">{{{</span><span class="co">jobname</span><span class="re">}}}</span></span>
@@ -310,30 +332,43 @@ are on your local disk again.</p>
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="ex">{{{rscript}}}</span> <span class="at">--vanilla</span> slurm_run.R</span></code></pre></div>
 </div>
-<div id="preparing-rslurm_template-for-submission" class="section level2">
-<h2>Preparing rslurm_template for submission</h2>
-<ol style="list-style-type: decimal">
-<li><p>make sure that <code>rslurm_template</code> is in a folder on
-your local disk</p></li>
-<li><p>for new Rprojects, add <code>_rslurm_*/</code> to git ignore, so
-that git knows not to upload to GitHub</p></li>
-</ol>
-<p>Once you have <code>rslurm_template</code> within your local disk,
-you will need to use a program such as <code>FileZilla</code> or
-<code>CyberDuck</code> to copy the rslurm_template to HPC for example on
-<code>FileZilla</code>, go to <code>File</code> &gt;
-<code>Site Manager</code> &gt; and log in to HPC</p>
-<p>Run <code>file.path(R.home(&quot;bin&quot;), &quot;Rscript&quot;)</code> on HPC and use
-returning path as <code>rscript_path</code> argument. (Example:
-<code>&quot;/sw/arcts/centos7/stacks/gcc/8.2.0/R/4.1.0/lib64/R/bin/Rscript&quot;</code>)</p>
-<p>The file path to the template file must be specified as
-<code>sh_template</code> argument (…maybe not? The template is identical
-to the default…)</p>
+<div id="preparing-rslurm_template-for-submission-can-be-skipped" class="section level2">
+<h2>Preparing rslurm_template for submission (can be skipped)</h2>
+<p>(1. make sure that <code>rslurm_template</code> is in a folder on
+your local disk)</p>
+<p>(2. for new Rprojects, add <code>_rslurm_*/</code> to git ignore, so
+that git knows not to upload to GitHub)</p>
 </div>
 <div id="submission-to-hpc" class="section level1">
 <h1>Submission to HPC</h1>
-<p>To submit a job to the cluster, type <code>sbatch submit.sh</code> in
-the terminal</p>
+<p>Prepare your local <code>R</code> script (see example below) and run
+all the code. This will create a <code>_rslurm_*</code> folder in your
+local working directory.</p>
+<p>Take this entire folder and use a program such as <em>FileZilla</em>
+or <em>CyberDuck</em> to copy the it to HPC for example on
+<em>FileZilla</em>, go to <code>File</code> &gt;
+<code>Site Manager</code> &gt; and log in to HPC</p>
+<p>Now, go back tp the <em>Terminal</em> app, login to the HPC (if not
+logged in already) and navigate to the just copied
+<code>_rslurm_*</code> folder by typen
+<code>cd &lt;foldername&gt;</code>. Once in that folder, to submit a job
+to the cluster, type <code>sbatch submit.sh</code> in the
+<em>Terminal</em>.</p>
+<p>Move back to yur home directory by just typing <code>cd</code> and
+check if all jobs are either running, or pending by useing the
+previously explaine <code>jobs_*</code> commands.</p>
+</div>
+<div id="if-jobs-failwhich-they-probably-will" class="section level1">
+<h1>If jobs fail…which they probably will…</h1>
+<p>If jobs fail with an error (see <code>jobs_info</code>), navigate
+back to the <code>_rslurm_*</code> folder using
+<code>cd &lt;foldername&gt;</code> again and list all files using the
+<code>ll</code> command. There should be either a (or several)
+<code>*.out</code> or <code>*.log</code> files
+(e.g. <code>slurm_1.out</code> or <code>error.log</code>). Print these
+files on the console by typing <code>cat &lt;filename&gt;</code> (e.g.,
+<code>cat slurm_1.out</code>) and check why the job failed. Try to fix
+the issue.</p>
 <div id="code-example" class="section level2">
 <h2>Code example</h2>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fl">1.5</span></span>
@@ -349,6 +384,15 @@ the terminal</p>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">&quot;time&quot;</span> <span class="ot">=</span> <span class="st">&quot;00:05:00&quot;</span>, <span class="co"># hh:mm:ss</span></span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">&quot;mem-per-cpu&quot;</span> <span class="ot">=</span> <span class="st">&quot;7G&quot;</span>),</span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">global_objects =</span> <span class="fu">c</span>(<span class="st">&quot;z&quot;</span>), <span class="at">pkgs =</span> <span class="fu">c</span>(<span class="st">&quot;purrr&quot;</span>, <span class="st">&quot;dplyr&quot;</span>), <span class="at">submit =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>If you didn’t write directly into your home directory in your cluster
+function, copy the entire <code>_rslurm_*</code> folder to your local
+disk by replacing the original folder. Then, you can use
+<code>get_slurm_out(sjob, &quot;raw&quot;)</code> to collect the results in the
+same <code>R</code> session.</p>
+<p>If you wrote the results directly into your home directory, just
+collect the results yourself.</p>
+<p>Make sure to delete all <code>_rslurm_*</code> folders once you have
+all results.</p>
 </div>
 </div>
 </article>
