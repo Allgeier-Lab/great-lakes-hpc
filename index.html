@@ -177,224 +177,135 @@ code span.ot { color: #007020; }
 <!-- badges: end -->
 <div id="get-accsess-to-hpc" class="section level2">
 <h2>Get accsess to HPC</h2>
-<p>First you need to get access to the HPC. For this, use <a href="https://teamdynamix.umich.edu/TDClient/30/Portal/Requests/ServiceDet?ID=42">this
-link</a> and complete the form to enable your U-Mich account to login to
-the HPC.</p>
-<p>Also, talk to your PI about which funding to use. They can
-additionally send an e-mail to the support team to add your account to
-the <a href="https://arc.umich.edu/umrcp/">U-M Research Computing
-Package</a> which allows to use a certain amount of free-of-cost
-minutes. Maybe you are even eligible for your own free-of-costs
-minutes.</p>
-<p>Once you have an account, use your <em>Terminal.app</em> (on macOS)
-to login to the HPC. For this use the following line. When asked to type
-your password, the cursor will not move! Make sure to have your 2-factor
-authentication ready (<em>DuoMobile</em>). In case you are not on
-Campus, use a <a href="https://its.umich.edu/enterprise/wifi-networks/vpn/getting-started">VPN</a>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="op">&lt;</span>username<span class="op">&gt;</span>@greatlakes.arc-ts.umich.edu</span></code></pre></div>
+<p>First you need to get access to the HPC. For this, use <a href="https://teamdynamix.umich.edu/TDClient/30/Portal/Requests/ServiceDet?ID=42">this link</a> and complete the form to enable your U-Mich account to login to the HPC.</p>
+<p>Also, talk to your PI about which funding to use. They can additionally send an e-mail to the support team to add your account to the <a href="https://arc.umich.edu/umrcp/">U-M Research Computing Package</a> which allows to use a certain amount of free-of-cost minutes. Maybe you are even eligible for your own free-of-costs minutes.</p>
+<p>Once you have an account, use your <em>Terminal.app</em> (on macOS) to login to the HPC. For this use the following line. When asked to type your password, the cursor will not move! Make sure to have your 2-factor authentication ready (<em>DuoMobile</em>). In case you are not on Campus, use a <a href="https://its.umich.edu/enterprise/wifi-networks/vpn/getting-started">VPN</a>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">ssh</span> <span class="op">&lt;</span>username<span class="op">&gt;</span>@greatlakes.arc-ts.umich.edu</span></code></pre></div>
 </div>
 <div id="setup-your-hpc-account" class="section level2">
 <h2>Setup your HPC account</h2>
-<p>If you use the HPC for the first time, you need to setup a few files
-and settings to make future uses easier. Luckiy, you have to do these
-steps only once!</p>
-<p>First, check out your <code>.bash_profile</code> file by typing
-<code>nano .bash_profile</code>. This will either open the file or
-create the file if it doesnt exit yet (using a text editor). Copy the
-following text into the file. To exit the text editor, press
-<code>control + x</code> and agree to saving the file by following the
-prompts. All this does, is each time checking if the listed following
-files (<code>.bash_aliases</code>, <code>.bash_modules</code>) exist and
-if so load them each time you log in.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># .bash_profile</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># load aliases</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">-f</span> ~/.bash_aliases <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">.</span> ~/.bash_aliases</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># load modules</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">-f</span> ~/.bash_modules <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">.</span> ~/.bash_modules</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div>
-<p>Next, we need to create <code>.bash_aliases</code> by typing
-<code>nano .bash_aliases</code>. Copy the following text into the file
-and exit/save it as previously. This file will create some easy
-accessible shortcuts/commands. You can always extend this list. So for
-example, to list all current running jobs submitted from your account
-you need to type <code>jobs_run</code> only instead of a very long
-original command. Be aware, that the aliases are available
-<strong>after</strong> you logged out and in to the HPC.</p>
+<p>If you use the HPC for the first time, you need to setup a few files and settings to make future uses easier. Luckiy, you have to do these steps only once!</p>
+<p>First, check out your <code>.bash_profile</code> file by typing <code>nano .bash_profile</code>. This will either open the file or create the file if it doesnt exit yet (using a text editor). Copy the following text into the file. To exit the text editor, press <code>control + x</code> and agree to saving the file by following the prompts. All this does, is each time checking if the listed following files (<code>.bash_aliases</code>, <code>.bash_modules</code>) exist and if so load them each time you log in.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># .bash_profile</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># load aliases</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="kw">if</span><span class="bu"> [</span> <span class="ot">-f</span> ~/.bash_aliases<span class="bu"> ]</span>; <span class="kw">then</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>    <span class="bu">.</span> <span class="ex">~/.bash_aliases</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="kw">fi</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co"># load modules</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="kw">if</span><span class="bu"> [</span> <span class="ot">-f</span> ~/.bash_modules<span class="bu"> ]</span>; <span class="kw">then</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>    <span class="bu">.</span> <span class="ex">~/.bash_modules</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="kw">fi</span></span></code></pre></div>
+<p>Next, we need to create <code>.bash_aliases</code> by typing <code>nano .bash_aliases</code>. Copy the following text into the file and exit/save it as previously. This file will create some easy accessible shortcuts/commands. You can always extend this list. So for example, to list all current running jobs submitted from your account you need to type <code>jobs_run</code> only instead of a very long original command. Be aware, that the aliases are available <strong>after</strong> you logged out and in to the HPC.</p>
 <p>The most important alias are all <code>jobs_*</code>.</p>
-<p><code>jobs_own</code>: Prints list of all jobs submitted by your
-account</p>
-<p><code>jobs_run</code>: Prints list of all <strong>running</strong>
-jobs submitted by your account</p>
-<p><code>jobs_pen</code>: Prints list of all <strong>pending</strong>
-jobs submitted by your account</p>
-<p><code>jobs_n</code>: Counts all <strong>running</strong> jobs
-submitted by your account</p>
-<p><code>jobs_info</code>: Prints list of all jobs submitted by your
-account including finished ones</p>
-<p><code>jobs_finished</code>: Counts all <strong>finished</strong> jobs
-submitted by your account</p>
-<p><code>jobs_kill</code>: Well…stops all current pending and running
-jobs submitted by your account</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">## General HPC/Account information</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> partitions_info=<span class="st">&#39;sinfo --sum&#39;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> jobs_standard=<span class="st">&#39;squeue --partition=standard --format=&quot;%.12i %.18j %.8u %.6a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> jobs_largemem=<span class="st">&#39;squeue --partition=largemem --format=&quot;%.12i %.18j %.8u %.6a  %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> account_info=<span class="st">&#39;sacctmgr show assoc user=$USER format=cluster,account,QOS,user,MaxSubmit,MaxJobs,GrpTRES&#39;</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> account_usage=<span class="st">&#39;sreport -T billing cluster UserUtilizationByAccount account=jeallg0 Start=2021-01-01 End=$NOW Format=Cluster,Login,Account,TresName,Used&#39;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> fairshare=<span class="st">&#39;sshare -U $USER&#39;</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">## Information submitted jobs</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> jobs_own=<span class="st">&#39;squeue -u $USER --format=&quot;%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> jobs_run=<span class="st">&#39;squeue -u $USER --states=RUNNING --format=&quot;%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> jobs_pen=<span class="st">&#39;squeue -u $USER --states=PENDING --format=&quot;%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> jobs_n=<span class="st">&#39;echo &quot;Running jobs : $(squeue -u $USER --states=RUNNING --noheader | wc -l)&quot;&#39;</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> jobs_kill=<span class="st">&#39;scancel -u $USER&#39;</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> jobs_info=<span class="st">&#39;sacct -u $USER --units=G --format=JobID,JobName,Account,Partition,Timelimit,Elapsed,AllocNodes,AllocCPU,ReqMem,MaxRSS,State&#39;</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> jobs_finished=<span class="st">&#39;echo &quot;Finished jobs: $(find _rslurm* -type f -name &quot;results_*.RDS&quot; | wc -l)&quot;&#39;</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">## Delete file types</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> rm_logs=<span class="st">&#39;rm -rf *.log&#39;</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> rm_future=<span class="st">&#39;rm -rf .future/&#39;</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> rm_rds=<span class="st">&#39;rm -rf *.rds&#39;</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> rm_rslurm=<span class="st">&#39;rm -rf _rslurm_*&#39;</span></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="co">## various</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> reload_bash=<span class="st">&#39;source ~/.bash_profile&#39;</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> monitor=<span class="st">&#39;htop -u $USER&#39;</span></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> ll=<span class="st">&#39;ls -lFG&#39;</span></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> R=<span class="st">&#39;R --vanilla&#39;</span></span></code></pre></div>
-<p>Last, you need to create <code>.bash_modules</code>. Again, type
-<code>nano .bash_modules</code> and copy the following text before
-exit/saving the file. This makes sure, each time you use the HPC some
-pre-installed software libraries are available (such as
-e.g. <code>R</code>). You probably want to load <code>gcc</code> and
-<code>R</code>. Depending on the analyses you run, you might need more
-modules (e.g., <code>gdal</code>, <code>proj</code>, or
-<code>geos</code>). You can use <code>module avail</code> on the HPC to
-show all options.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Load modules</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load gcc/8.2.0</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load R/4.1.0</span></code></pre></div>
+<p><code>jobs_own</code>: Prints list of all jobs submitted by your account</p>
+<p><code>jobs_run</code>: Prints list of all <strong>running</strong> jobs submitted by your account</p>
+<p><code>jobs_pen</code>: Prints list of all <strong>pending</strong> jobs submitted by your account</p>
+<p><code>jobs_n</code>: Counts all <strong>running</strong> jobs submitted by your account</p>
+<p><code>jobs_info</code>: Prints list of all jobs submitted by your account including finished ones</p>
+<p><code>jobs_finished</code>: Counts all <strong>finished</strong> jobs submitted by your account</p>
+<p><code>jobs_kill</code>: Well…stops all current pending and running jobs submitted by your account</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">## General HPC/Account information</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="bu">alias</span> partitions_info=<span class="st">&#39;sinfo --sum&#39;</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="bu">alias</span> jobs_standard=<span class="st">&#39;squeue --partition=standard --format=&quot;%.12i %.18j %.8u %.6a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="bu">alias</span> jobs_largemem=<span class="st">&#39;squeue --partition=largemem --format=&quot;%.12i %.18j %.8u %.6a  %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="bu">alias</span> account_info=<span class="st">&#39;sacctmgr show assoc user=$USER format=cluster,account,QOS,user,MaxSubmit,MaxJobs,GrpTRES&#39;</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="bu">alias</span> account_usage=<span class="st">&#39;sreport -T billing cluster UserUtilizationByAccount account=jeallg0 Start=2021-01-01 End=$NOW Format=Cluster,Login,Account,TresName,Used&#39;</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="bu">alias</span> fairshare=<span class="st">&#39;sshare -U $USER&#39;</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="co">## Information submitted jobs</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a></span>
+<span id="cb3-14"><a href="#cb3-14"></a><span class="bu">alias</span> jobs_own=<span class="st">&#39;squeue -u $USER --format=&quot;%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a><span class="bu">alias</span> jobs_run=<span class="st">&#39;squeue -u $USER --states=RUNNING --format=&quot;%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a><span class="bu">alias</span> jobs_pen=<span class="st">&#39;squeue -u $USER --states=PENDING --format=&quot;%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T&quot;&#39;</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a><span class="bu">alias</span> jobs_n=<span class="st">&#39;echo &quot;Running jobs : $(squeue -u $USER --states=RUNNING --noheader | wc -l)&quot;&#39;</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a><span class="bu">alias</span> jobs_kill=<span class="st">&#39;scancel -u $USER&#39;</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="bu">alias</span> jobs_info=<span class="st">&#39;sacct -u $USER --units=G --format=JobID,JobName,Account,Partition,Timelimit,Elapsed,AllocNodes,AllocCPU,ReqMem,MaxRSS,State&#39;</span></span>
+<span id="cb3-20"><a href="#cb3-20"></a></span>
+<span id="cb3-21"><a href="#cb3-21"></a><span class="bu">alias</span> jobs_finished=<span class="st">&#39;echo &quot;Finished jobs: $(find _rslurm* -type f -name &quot;results_*.RDS&quot; | wc -l)&quot;&#39;</span></span>
+<span id="cb3-22"><a href="#cb3-22"></a></span>
+<span id="cb3-23"><a href="#cb3-23"></a><span class="co">## Delete file types</span></span>
+<span id="cb3-24"><a href="#cb3-24"></a></span>
+<span id="cb3-25"><a href="#cb3-25"></a><span class="bu">alias</span> rm_logs=<span class="st">&#39;rm -rf *.log&#39;</span></span>
+<span id="cb3-26"><a href="#cb3-26"></a><span class="bu">alias</span> rm_future=<span class="st">&#39;rm -rf .future/&#39;</span></span>
+<span id="cb3-27"><a href="#cb3-27"></a><span class="bu">alias</span> rm_rds=<span class="st">&#39;rm -rf *.rds&#39;</span></span>
+<span id="cb3-28"><a href="#cb3-28"></a><span class="bu">alias</span> rm_rslurm=<span class="st">&#39;rm -rf _rslurm_*&#39;</span></span>
+<span id="cb3-29"><a href="#cb3-29"></a></span>
+<span id="cb3-30"><a href="#cb3-30"></a><span class="co">## various</span></span>
+<span id="cb3-31"><a href="#cb3-31"></a></span>
+<span id="cb3-32"><a href="#cb3-32"></a><span class="bu">alias</span> reload_bash=<span class="st">&#39;source ~/.bash_profile&#39;</span></span>
+<span id="cb3-33"><a href="#cb3-33"></a><span class="bu">alias</span> monitor=<span class="st">&#39;htop -u $USER&#39;</span></span>
+<span id="cb3-34"><a href="#cb3-34"></a></span>
+<span id="cb3-35"><a href="#cb3-35"></a><span class="bu">alias</span> ll=<span class="st">&#39;ls -lFG&#39;</span></span>
+<span id="cb3-36"><a href="#cb3-36"></a></span>
+<span id="cb3-37"><a href="#cb3-37"></a><span class="bu">alias</span> R=<span class="st">&#39;R --vanilla&#39;</span></span></code></pre></div>
+<p>Last, you need to create <code>.bash_modules</code>. Again, type <code>nano .bash_modules</code> and copy the following text before exit/saving the file. This makes sure, each time you use the HPC some pre-installed software libraries are available (such as e.g. <code>R</code>). You probably want to load <code>gcc</code> and <code>R</code>. Depending on the analyses you run, you might need more modules (e.g., <code>gdal</code>, <code>proj</code>, or <code>geos</code>). You can use <code>module avail</code> on the HPC to show all options.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">## Load modules</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="ex">module</span> load gcc/8.2.0</span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="ex">module</span> load R/4.1.0</span></code></pre></div>
 </div>
 <div id="install-r-packages-on-the-hpc" class="section level2">
 <h2>Install R packages on the HPC</h2>
-<p>You need to install all <code>R</code> packages that you want to use
-on the HPC once. For this, login to the HPC and start a <code>R</code>
-session in the <em>Terminal</em> by typing <code>R</code> (make sure you
-loaded the corresponding module). Now, simply run
-<code>install.packages(c(&quot;package_name_1, package_name_2&quot;))</code> to
-install all packages you need. The first time you run the command, it
-might prompt you a question if you want to create your own libraries
-folder. Say yes to this. Also, you need to select a CRAN mirror. Just
-pick any number during the corresponding prompt message. You need to
-re-do this step each time you want to run some code with a new package
-you have not installed previously. Once you have installed all packages,
-exit the <code>R</code> session by typing <code>Q()</code> (…and do not
-save your workspace image by pressing <code>n</code>…).</p>
-<p>Run <code>file.path(R.home(&quot;bin&quot;), &quot;Rscript&quot;)</code> on HPC and use
-the returning path as <code>rscript_path</code> argument. The path
-should be
-<code>&quot;/sw/arcts/centos7/stacks/gcc/8.2.0/R/4.1.0/lib64/R/bin/Rscript&quot;</code>
-for all users. You need this in the
-<code>slurm_apply</code>/<code>slurm_map</code> function in your local
-<code>R</code> session later.</p>
-<p>That’s so far everything we need to setup on the HPC! The next steps
-are on your local disk again.</p>
+<p>You need to install all <code>R</code> packages that you want to use on the HPC once. For this, login to the HPC and start a <code>R</code> session in the <em>Terminal</em> by typing <code>R</code> (make sure you loaded the corresponding module). Now, simply run <code>install.packages(c(&quot;package_name_1, package_name_2&quot;))</code> to install all packages you need. The first time you run the command, it might prompt you a question if you want to create your own libraries folder. Say yes to this. Also, you need to select a CRAN mirror. Just pick any number during the corresponding prompt message. You need to re-do this step each time you want to run some code with a new package you have not installed previously. Once you have installed all packages, exit the <code>R</code> session by typing <code>Q()</code> (…and do not save your workspace image by pressing <code>n</code>…).</p>
+<p>Run <code>file.path(R.home(&quot;bin&quot;), &quot;Rscript&quot;)</code> on HPC and use the returning path as <code>rscript_path</code> argument. The path should be <code>&quot;/sw/arcts/centos7/stacks/gcc/8.2.0/R/4.1.0/lib64/R/bin/Rscript&quot;</code> for all users. You need this in the <code>slurm_apply</code>/<code>slurm_map</code> function in your local <code>R</code> session later.</p>
+<p>That’s so far everything we need to setup on the HPC! The next steps are on your local disk again.</p>
 </div>
 <div id="rslurm-template-this-can-be-skipped" class="section level2">
 <h2>rslurm template (This can be skipped)</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=</span><span class="re">{{{</span><span class="co">jobname</span><span class="re">}}}</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --array=0-</span><span class="re">{{{</span><span class="co">max_node</span><span class="re">}}}{{{</span><span class="co">job_array_task_limit</span><span class="re">}}}</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=</span><span class="re">{{{</span><span class="co">cpus_per_node</span><span class="re">}}}</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ex">{{#flags}}</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --</span><span class="re">{{{</span><span class="co">name</span><span class="re">}}}</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="ex">{{/flags}}</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="ex">{{#options}}</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --</span><span class="re">{{{</span><span class="co">name</span><span class="re">}}}</span><span class="co">=</span><span class="re">{{{</span><span class="co">value</span><span class="re">}}}</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="ex">{{/options}}</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=</span><span class="re">{{{</span><span class="co">jobname</span><span class="re">}}}</span><span class="co">.log</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --error=</span><span class="re">{{{</span><span class="co">jobname</span><span class="re">}}}</span><span class="co">.log</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="ex">{{{rscript}}}</span> <span class="at">--vanilla</span> slurm_run.R</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co">#SBATCH --job-name=</span><span class="re">{{{</span><span class="co">jobname</span><span class="re">}}}</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#SBATCH --array=0-</span><span class="re">{{{</span><span class="co">max_node</span><span class="re">}}}{{{</span><span class="co">job_array_task_limit</span><span class="re">}}}</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="co">#SBATCH --cpus-per-task=</span><span class="re">{{{</span><span class="co">cpus_per_node</span><span class="re">}}}</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="dt">{{#flags}}</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#SBATCH --</span><span class="re">{{{</span><span class="co">name</span><span class="re">}}}</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="dt">{{/flags}}</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="dt">{{#options}}</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#SBATCH --</span><span class="re">{{{</span><span class="co">name</span><span class="re">}}}</span><span class="co">=</span><span class="re">{{{</span><span class="co">value</span><span class="re">}}}</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="dt">{{/options}}</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#SBATCH --output=</span><span class="re">{{{</span><span class="co">jobname</span><span class="re">}}}</span><span class="co">.log</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#SBATCH --error=</span><span class="re">{{{</span><span class="co">jobname</span><span class="re">}}}</span><span class="co">.log</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="dt">{{{rscript}}}</span> <span class="ex">--vanilla</span> slurm_run.R</span></code></pre></div>
 </div>
 <div id="preparing-rslurm_template-for-submission-can-be-skipped" class="section level2">
 <h2>Preparing rslurm_template for submission (can be skipped)</h2>
-<p>(1. make sure that <code>rslurm_template</code> is in a folder on
-your local disk)</p>
-<p>(2. for new Rprojects, add <code>_rslurm_*/</code> to git ignore, so
-that git knows not to upload to GitHub)</p>
+<p>(1. make sure that <code>rslurm_template</code> is in a folder on your local disk)</p>
+<p>(2. for new Rprojects, add <code>_rslurm_*/</code> to git ignore, so that git knows not to upload to GitHub)</p>
 </div>
 <div id="submission-to-hpc" class="section level1">
 <h1>Submission to HPC</h1>
-<p>Prepare your local <code>R</code> script (see example below) and run
-all the code. This will create a <code>_rslurm_*</code> folder in your
-local working directory.</p>
-<p>Take this entire folder and use a program such as <em>FileZilla</em>
-or <em>CyberDuck</em> to copy the it to HPC for example on
-<em>FileZilla</em>, go to <code>File</code> &gt;
-<code>Site Manager</code> &gt; and log in to HPC</p>
-<p>Now, go back tp the <em>Terminal</em> app, login to the HPC (if not
-logged in already) and navigate to the just copied
-<code>_rslurm_*</code> folder by typen
-<code>cd &lt;foldername&gt;</code>. Once in that folder, to submit a job
-to the cluster, type <code>sbatch submit.sh</code> in the
-<em>Terminal</em>.</p>
-<p>Move back to yur home directory by just typing <code>cd</code> and
-check if all jobs are either running, or pending by useing the
-previously explaine <code>jobs_*</code> commands.</p>
+<p>Prepare your local <code>R</code> script (see example below) and run all the code. This will create a <code>_rslurm_*</code> folder in your local working directory.</p>
+<p>Take this entire folder and use a program such as <em>FileZilla</em> or <em>CyberDuck</em> to copy the it to HPC for example on <em>FileZilla</em>, go to <code>File</code> &gt; <code>Site Manager</code> &gt; and log in to HPC</p>
+<p>Now, go back tp the <em>Terminal</em> app, login to the HPC (if not logged in already) and navigate to the just copied <code>_rslurm_*</code> folder by typen <code>cd &lt;foldername&gt;</code>. Once in that folder, to submit a job to the cluster, type <code>sbatch submit.sh</code> in the <em>Terminal</em>.</p>
+<p>Move back to yur home directory by just typing <code>cd</code> and check if all jobs are either running, or pending by useing the previously explaine <code>jobs_*</code> commands.</p>
 </div>
 <div id="if-jobs-failwhich-they-probably-will" class="section level1">
 <h1>If jobs fail…which they probably will…</h1>
-<p>If jobs fail with an error (see <code>jobs_info</code>), navigate
-back to the <code>_rslurm_*</code> folder using
-<code>cd &lt;foldername&gt;</code> again and list all files using the
-<code>ll</code> command. There should be either a (or several)
-<code>*.out</code> or <code>*.log</code> files
-(e.g. <code>slurm_1.out</code> or <code>error.log</code>). Print these
-files on the console by typing <code>cat &lt;filename&gt;</code> (e.g.,
-<code>cat slurm_1.out</code>) and check why the job failed. Try to fix
-the issue.</p>
+<p>If jobs fail with an error (see <code>jobs_info</code>), navigate back to the <code>_rslurm_*</code> folder using <code>cd &lt;foldername&gt;</code> again and list all files using the <code>ll</code> command. There should be either a (or several) <code>*.out</code> or <code>*.log</code> files (e.g. <code>slurm_1.out</code> or <code>error.log</code>). Print these files on the console by typing <code>cat &lt;filename&gt;</code> (e.g., <code>cat slurm_1.out</code>) and check why the job failed. Try to fix the issue.</p>
 <div id="code-example" class="section level2">
 <h2>Code example</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fl">1.5</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>fx <span class="ot">=</span> <span class="cf">function</span>(x, y) (x <span class="sc">*</span> <span class="dv">2</span> <span class="sc">+</span> y) <span class="sc">^</span> z </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>par_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>sjob <span class="ot">&lt;-</span> <span class="fu">slurm_apply</span>(<span class="at">f =</span> fx, <span class="at">params =</span> par_df, <span class="at">y =</span> <span class="dv">10</span>, <span class="at">jobname =</span> <span class="st">&#39;my_first_test&#39;</span>,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">nodes =</span> <span class="fu">nrow</span>(par_df), <span class="at">cpus_per_node =</span> <span class="dv">1</span>,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">rscript_path =</span> <span class="st">&quot;/sw/arcts/centos7/stacks/gcc/8.2.0/R/4.1.0/lib64/R/bin/Rscript&quot;</span>,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">slurm_options =</span> <span class="fu">list</span>(<span class="st">&quot;account&quot;</span> <span class="ot">=</span> <span class="er">&lt;</span>Account<span class="sc">&gt;</span>, </span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">&quot;partition&quot;</span> <span class="ot">=</span> <span class="st">&quot;standard&quot;</span>,</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">&quot;time&quot;</span> <span class="ot">=</span> <span class="st">&quot;00:05:00&quot;</span>, <span class="co"># hh:mm:ss</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">&quot;mem-per-cpu&quot;</span> <span class="ot">=</span> <span class="st">&quot;7G&quot;</span>),</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">global_objects =</span> <span class="fu">c</span>(<span class="st">&quot;z&quot;</span>), <span class="at">pkgs =</span> <span class="fu">c</span>(<span class="st">&quot;purrr&quot;</span>, <span class="st">&quot;dplyr&quot;</span>), <span class="at">submit =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<p>If you didn’t write directly into your home directory in your cluster
-function, copy the entire <code>_rslurm_*</code> folder to your local
-disk by replacing the original folder. Then, you can use
-<code>get_slurm_out(sjob, &quot;raw&quot;)</code> to collect the results in the
-same <code>R</code> session.</p>
-<p>If you wrote the results directly into your home directory, just
-collect the results yourself.</p>
-<p>Make sure to delete all <code>_rslurm_*</code> folders once you have
-all results.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>z &lt;-<span class="st"> </span><span class="fl">1.5</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>fx =<span class="st"> </span><span class="cf">function</span>(x, y) (x <span class="op">*</span><span class="st"> </span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>y) <span class="op">^</span><span class="st"> </span>z </span>
+<span id="cb6-3"><a href="#cb6-3"></a></span>
+<span id="cb6-4"><a href="#cb6-4"></a>par_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</span>
+<span id="cb6-5"><a href="#cb6-5"></a></span>
+<span id="cb6-6"><a href="#cb6-6"></a>sjob &lt;-<span class="st"> </span><span class="kw">slurm_apply</span>(<span class="dt">f =</span> fx, <span class="dt">params =</span> par_df, <span class="dt">y =</span> <span class="dv">10</span>, <span class="dt">jobname =</span> <span class="st">&#39;my_first_test&#39;</span>,</span>
+<span id="cb6-7"><a href="#cb6-7"></a>                    <span class="dt">nodes =</span> <span class="kw">nrow</span>(par_df), <span class="dt">cpus_per_node =</span> <span class="dv">1</span>,</span>
+<span id="cb6-8"><a href="#cb6-8"></a>                    <span class="dt">rscript_path =</span> <span class="st">&quot;/sw/arcts/centos7/stacks/gcc/8.2.0/R/4.1.0/lib64/R/bin/Rscript&quot;</span>,</span>
+<span id="cb6-9"><a href="#cb6-9"></a>                    <span class="dt">slurm_options =</span> <span class="kw">list</span>(<span class="st">&quot;account&quot;</span> =<span class="st"> </span><span class="er">&lt;</span>Account<span class="op">&gt;</span>, </span>
+<span id="cb6-10"><a href="#cb6-10"></a>                                         <span class="st">&quot;partition&quot;</span> =<span class="st"> &quot;standard&quot;</span>,</span>
+<span id="cb6-11"><a href="#cb6-11"></a>                                         <span class="st">&quot;time&quot;</span> =<span class="st"> &quot;00:05:00&quot;</span>, <span class="co"># hh:mm:ss</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a>                                         <span class="st">&quot;mem-per-cpu&quot;</span> =<span class="st"> &quot;7G&quot;</span>),</span>
+<span id="cb6-13"><a href="#cb6-13"></a>                    <span class="dt">global_objects =</span> <span class="kw">c</span>(<span class="st">&quot;z&quot;</span>), <span class="dt">pkgs =</span> <span class="kw">c</span>(<span class="st">&quot;purrr&quot;</span>, <span class="st">&quot;dplyr&quot;</span>), <span class="dt">submit =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<p>If you didn’t write directly into your home directory in your cluster function, copy the entire <code>_rslurm_*</code> folder to your local disk by replacing the original folder. Then, you can use <code>get_slurm_out(sjob, &quot;raw&quot;)</code> to collect the results in the same <code>R</code> session.</p>
+<p>If you wrote the results directly into your home directory, just collect the results yourself.</p>
+<p>Make sure to delete all <code>_rslurm_*</code> folders once you have all results.</p>
 </div>
 </div>
 </article>
