@@ -162,6 +162,8 @@ Prepare your local `R` script (see example below) and run all the code. This wil
 
 Take this entire folder and use a program such as _FileZilla_ or _CyberDuck_ to copy the it to HPC for example on _FileZilla_, go to `File` > `Site Manager` > and log in to HPC
 
+File server: sftp://greatlakes-xfer.arc-ts.umich.edu
+
 Now, go back tp the _Terminal_ app, login to the HPC (if not logged in already) and navigate to the just copied `_rslurm_*` folder by typen `cd <foldername>`. Once in that folder, to submit a job to the cluster, type `sbatch submit.sh` in the _Terminal_.
 
 Move back to yur home directory by just typing `cd` and check if all jobs are either running, or pending by useing the previously explaine `jobs_*` commands. 
