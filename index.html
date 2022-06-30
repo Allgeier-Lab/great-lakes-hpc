@@ -282,6 +282,7 @@ code span.ot { color: #007020; }
 <h1>Submission to HPC</h1>
 <p>Prepare your local <code>R</code> script (see example below) and run all the code. This will create a <code>_rslurm_*</code> folder in your local working directory.</p>
 <p>Take this entire folder and use a program such as <em>FileZilla</em> or <em>CyberDuck</em> to copy the it to HPC for example on <em>FileZilla</em>, go to <code>File</code> &gt; <code>Site Manager</code> &gt; and log in to HPC</p>
+<p>File server: <a href="sftp://greatlakes-xfer.arc-ts.umich.edu" class="uri">sftp://greatlakes-xfer.arc-ts.umich.edu</a></p>
 <p>Now, go back tp the <em>Terminal</em> app, login to the HPC (if not logged in already) and navigate to the just copied <code>_rslurm_*</code> folder by typen <code>cd &lt;foldername&gt;</code>. Once in that folder, to submit a job to the cluster, type <code>sbatch submit.sh</code> in the <em>Terminal</em>.</p>
 <p>Move back to yur home directory by just typing <code>cd</code> and check if all jobs are either running, or pending by useing the previously explaine <code>jobs_*</code> commands.</p>
 </div>
