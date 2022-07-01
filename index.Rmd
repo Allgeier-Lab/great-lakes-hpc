@@ -25,9 +25,9 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 
 ## Get accsess to HPC
 
-First you need to get access to the HPC. For this, use [this link](https://teamdynamix.umich.edu/TDClient/30/Portal/Requests/ServiceDet?ID=42) and complete the form to enable your U-Mich account to login to the HPC. 
+First you need to get access to the HPC. For this, use [this link](https://teamdynamix.umich.edu/TDClient/30/Portal/Requests/ServiceDet?ID=42) and complete the form to enable your U-Mich account to login to the HPC.
 
-Also, talk to your PI about which funding to use. They can additionally send an e-mail to the support team to add your account to the [U-M Research Computing Package](https://arc.umich.edu/umrcp/) which allows to use a certain amount of free-of-cost minutes. Maybe you are even eligible for your own free-of-costs minutes.
+Also, talk to your PI about which funding to use. They can additionally send an e-mail to the support team to add your account to the [U-M Research Computing Package](https://arc.umich.edu/umrcp/) which allows to use a certain amount of free-of-cost minutes. Maybe you are even eligible for your own free-of-costs minutes (ask the GreatLakes support people to find out!).
 
 Once you have an account, use your _Terminal.app_ (on macOS) to login to the HPC. For this use the following line. When asked to type your password, the cursor will not move! Make sure to have your 2-factor authentication ready (_DuoMobile_). In case you are not on Campus, use a [VPN](https://its.umich.edu/enterprise/wifi-networks/vpn/getting-started).
 
@@ -37,9 +37,9 @@ ssh <username>@greatlakes.arc-ts.umich.edu
 
 ## Setup your HPC account
 
-If you use the HPC for the first time, you need to setup a few files and settings to make future uses easier. Luckiy, you have to do these steps only once!
+If you use the HPC for the first time, you need to setup a few files and settings to make future uses easier. Luckily, you have to do these steps only once!
 
-First, check out your `.bash_profile` file by typing `nano .bash_profile`. This will either open the file or create the file if it doesnt exit yet (using a text editor). Copy the following text into the file. To exit the text editor, press `control + x` and agree to saving the file by following the prompts. All this does, is each time checking if the listed following files (`.bash_aliases`, `.bash_modules`) exist and if so load them each time you log in.
+First, check out your `.bash_profile` file by typing `nano .bash_profile`. This will either open the file or create the file if it doesnt exit yet (using a text editor). Copy the following text into the file. To exit the text editor, press `control + x` and agree to saving the file by following the prompts at the bottom of the screen. Now, each time you log into the HPC, it automatically checks if the listed files (`.bash_aliases`, `.bash_modules`) exist and if so load them.
 
 ```{bash profile}
 # .bash_profile
@@ -55,9 +55,9 @@ if [ -f ~/.bash_modules ]; then
 fi
 ```
 
-Next, we need to create `.bash_aliases` by typing `nano .bash_aliases`. Copy the following text into the file and exit/save it as previously. This file will create some easy accessible shortcuts/commands. You can always extend this list. So for example, to list all current running jobs submitted from your account you need to type `jobs_run` only instead of a very long original command. Be aware, that the aliases are available **after** you logged out and in to the HPC.
+Next, we need to create `.bash_aliases` by typing `nano .bash_aliases`. Copy the following text into the file and exit/save it as previously. This file will create some easy accessible shortcuts/commands. You can always extend this list. So for example, to list all current running jobs submitted from your account you need to type `jobs_run` only instead of a very long original command. Be aware, that the aliases are available **after** you logged out and in to the HPC after creating the file for the first time.
 
-The most important alias are all `jobs_*`. 
+The most important alias are all `jobs_*`.
 
 `jobs_own`: Prints list of all jobs submitted by your account
 
@@ -123,14 +123,11 @@ module load R/4.1.0
 
 ## Install R packages on the HPC
 
-You need to install all `R` packages that you want to use on the HPC once. For this, login to the HPC and start a `R` session in the _Terminal_ by typing `R` (make sure you loaded the corresponding module). Now, simply run `install.packages(c("package_name_1, package_name_2"))` to install all packages you need. The first time you run the command, it might prompt you a question if you want to create your own libraries folder. Say yes to this. Also, you need to select a CRAN mirror. Just pick any number during the corresponding prompt message. You need to re-do this step each time you want to run some code with a new package you have not installed previously. Once you have installed all packages, exit the `R` session by typing `Q()` (...and do not save your workspace image by pressing `n`...).
-
-Run `file.path(R.home("bin"), "Rscript")` on HPC and use the returning path as `rscript_path` argument. The path should be `"/sw/arcts/centos7/stacks/gcc/8.2.0/R/4.1.0/lib64/R/bin/Rscript"` for all users. You need this in the `slurm_apply`/`slurm_map`
-function in your local `R` session later.
+You need to install all `R` packages that you want to use on the HPC once. For this, login to the HPC and start a `R` session in the _Terminal_ by typing `R` (make sure you loaded the corresponding module). Now, simply run `install.packages(c("package_name_1, package_name_2"))` to install all packages you need. The first time you run the command, it might prompt you a question if you want to create your own libraries folder. Say yes to this. Also, you need to select a CRAN mirror. Just pick any number during the corresponding prompt message. You need to re-do this step each time you want to run some code with a new package you have not installed previously. Once you have installed all packages, exit the `R` session by typing `q()` (...and do not save your workspace image by pressing `n`...).
 
 That's so far everything we need to setup on the HPC! The next steps are on your local disk again.
 
-## rslurm template (This can be skipped)
+## rslurm template (can be skipped)
 
 ```{bash rslurm_template}
 #!/bin/bash
@@ -152,46 +149,46 @@ That's so far everything we need to setup on the HPC! The next steps are on your
 
 ## Preparing rslurm_template for submission (can be skipped)
 
-(1. make sure that `rslurm_template` is in a folder on your local disk) 
+(1. make sure that `rslurm_template` is in a folder on your local disk)
 
 (2. for new Rprojects, add `_rslurm_*/` to git ignore, so that git knows not to upload to GitHub)
 
 # Submission to HPC
 
-Prepare your local `R` script (see example below) and run all the code. This will create a `_rslurm_*` folder in your local working directory.
+Prepare your local `R` script (see example below) and run all the code. The `rscript_path` argument should be `"/sw/arcts/centos7/stacks/gcc/8.2.0/R/4.1.0/lib64/R/bin/Rscript"` (Watch out, to adpat this path if you use a different version of `R` on the HPC. You can find out the correct path by login into the HPC, start a R session and run `file.path(R.home("bin"), "Rscript")`). Running the `slurm_apply/map` function will create a `_rslurm_*` folder in your local working directory.
 
-Take this entire folder and use a program such as _FileZilla_ or _CyberDuck_ to copy the it to HPC for example on _FileZilla_, go to `File` > `Site Manager` > and log in to HPC
+Take this entire folder and use a program such as [_FileZilla_](https://filezilla-project.org) or [_CyberDuck_](https://cyberduck.io) to copy the it to HPC. For example on _FileZilla_, go to `File` > `Site Manager` > and log in to HPC. (Personally, I think CyberDuck is nicer to use...). The fileserver to transfer files is `sftp://greatlakes-xfer.arc-ts.umich.edu`
 
-File server: sftp://greatlakes-xfer.arc-ts.umich.edu
+Now, go back tp the _Terminal_ app, login to the HPC (if not logged in already) and navigate to the just copied `_rslurm_*` folder by typing `cd <foldername>`. Once in that folder, to submit a job to the cluster, type `sbatch submit.sh` in the _Terminal_. This should print a submission message on the console including a unique ID number.
 
-Now, go back tp the _Terminal_ app, login to the HPC (if not logged in already) and navigate to the just copied `_rslurm_*` folder by typen `cd <foldername>`. Once in that folder, to submit a job to the cluster, type `sbatch submit.sh` in the _Terminal_.
-
-Move back to yur home directory by just typing `cd` and check if all jobs are either running, or pending by useing the previously explaine `jobs_*` commands. 
+Move back to your home directory by just typing `cd` and check if all jobs are either running, or pending by useing the previously explaine `jobs_*` commands.
 
 # If jobs fail...which they probably will...
 
-If jobs fail with an error (see `jobs_info`), navigate back to the `_rslurm_*` folder using `cd <foldername>` again and list all files using the `ll` command. There should be either a (or several) `*.out` or `*.log` files (e.g. `slurm_1.out` or `error.log`). Print these files on the console by typing `cat <filename>` (e.g., `cat slurm_1.out`) and check why the job failed. Try to fix the issue.
+If jobs fail with an error (see `jobs_info`), navigate back to the `_rslurm_*` folder using `cd <foldername>` again and list all files using the `ll` command. There should be either one (or several) `*.out` or `*.log` files (e.g. `slurm_1.out` or `error.log`). Print these files on the console by typing `cat <filename>` (e.g., `cat slurm_1.out`) and check why the job failed. Try to fix the issue. Alternativly, you can also download these log files to your computer using _FileZilla_ or _CyberDuck_ and open them with a text editor software.
 
 ## Code example
 
 ```{r eval = FALSE}
 z <- 1.5
-fx = function(x, y) (x * 2 + y) ^ z 
+fx = function(x, y) (x * 2 + y) ^ z
 
 par_df <- data.frame(x = 1:5)
 
 sjob <- slurm_apply(f = fx, params = par_df, y = 10, jobname = 'my_first_test',
                     nodes = nrow(par_df), cpus_per_node = 1,
                     rscript_path = "/sw/arcts/centos7/stacks/gcc/8.2.0/R/4.1.0/lib64/R/bin/Rscript",
-                    slurm_options = list("account" = <Account>, 
+                    slurm_options = list("account" = <Account>,
                                          "partition" = "standard",
                                          "time" = "00:05:00", # hh:mm:ss
                                          "mem-per-cpu" = "7G"),
                     global_objects = c("z"), pkgs = c("purrr", "dplyr"), submit = FALSE)
 ```
 
-If you didn't write directly into your home directory in your cluster function, copy the entire `_rslurm_*` folder to your local disk by replacing the original folder. Then, you can use `get_slurm_out(sjob, "raw")` to collect the results in the same `R` session.
+# Completed jobs
 
-If you wrote the results directly into your home directory, just collect the results yourself. 
+If you didn't write directly into your home directory in your cluster function, copy the entire `_rslurm_*` folder to your local disk by replacing the original folder using _FileZilla_ or _CyberDuck_. Then, you can use `get_slurm_out(sjob, "raw")` to collect the results in the same `R` session.
 
-Make sure to delete all `_rslurm_*` folders once you have all results.
+If you wrote the results directly into your home directory, just collect the results yourself by downloading them using _FileZilla_ or _CyberDuck_.
+
+Make sure to delete all `_rslurm_*` folders (on the HPC and locally) once you have all results saved.
