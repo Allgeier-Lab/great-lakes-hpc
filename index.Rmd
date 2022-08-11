@@ -23,6 +23,8 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 
 <!-- badges: end -->
 
+**All software on the HPC was recently updated (Date: 2022/08/10). So you might need to update some paths and installed software and modules**
+
 ## Get accsess to HPC
 
 First you need to get access to the HPC. For this, use [this link](https://teamdynamix.umich.edu/TDClient/30/Portal/Requests/ServiceDet?ID=42) and complete the form to enable your U-Mich account to login to the HPC.
@@ -117,8 +119,8 @@ Last, you need to create `.bash_modules`. Again, type `nano .bash_modules` and c
 ```{bash modules}
 ## Load modules
 
-module load gcc/8.2.0
-module load R/4.1.0
+module load gcc/10.3.0
+module load R/4.2.0
 ```
 
 ## Install R packages on the HPC
@@ -155,7 +157,7 @@ That's so far everything we need to setup on the HPC! The next steps are on your
 
 # Submission to HPC
 
-Prepare your local `R` script (see example below) and run all the code. The `rscript_path` argument should be `"/sw/arcts/centos7/stacks/gcc/8.2.0/R/4.1.0/lib64/R/bin/Rscript"` (Watch out, to adpat this path if you use a different version of `R` on the HPC. You can find out the correct path by login into the HPC, start a R session and run `file.path(R.home("bin"), "Rscript")`). Running the `slurm_apply/map` function will create a `_rslurm_*` folder in your local working directory.
+Prepare your local `R` script (see example below) and run all the code. The `rscript_path` argument should be `"/sw/pkgs/arc/stacks/gcc/10.3.0/R/4.2.0/lib64/R/bin/Rscript"` (Watch out, to adpat this path if you use a different version of `R` on the HPC. You can find out the correct path by login into the HPC, start a R session and run `file.path(R.home("bin"), "Rscript")`). Running the `slurm_apply/map` function will create a `_rslurm_*` folder in your local working directory.
 
 Take this entire folder and use a program such as [_FileZilla_](https://filezilla-project.org) or [_CyberDuck_](https://cyberduck.io) to copy the it to HPC. For example on _FileZilla_, go to `File` > `Site Manager` > and log in to HPC. (Personally, I think CyberDuck is nicer to use...). The fileserver to transfer files is `sftp://greatlakes-xfer.arc-ts.umich.edu`
 
