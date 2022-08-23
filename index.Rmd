@@ -23,7 +23,7 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 
 <!-- badges: end -->
 
-**All software on the HPC was recently updated (Date: 2022/08/10). So you might need to update some paths and installed software and modules**
+**All software on the HPC was recently updated (Date: 2022/08/10). So you might need to update some paths and installed software and modules!**
 
 ## Get accsess to HPC
 
