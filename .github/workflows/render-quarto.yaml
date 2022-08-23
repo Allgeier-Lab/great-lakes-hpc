@@ -17,4 +17,4 @@ jobs:
         
       - name: Render Quarto
         run: |
-        quarto render index.qmd
+          quarto render index.qmd
