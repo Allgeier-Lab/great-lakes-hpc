@@ -3,11 +3,13 @@ title: "How to use the Great Lakes High Performance Cluster"
 author:
   - Katrina S. Munsterman
   - Maximilian H.K. Hesselbarth
-output:
-  prettydoc::html_pretty:
-    theme: leonids
-    highlight: github
 date: "`r Sys.Date()`"
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-location: left
+    toc-title: Table of contents
 ---
 
 ```{r setup, include=FALSE}
@@ -16,16 +18,20 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 
 <!-- badges: start -->
 
+:::{.column-page-right}
+
 [![License: GPL v3](https://shields.io/badge/License-GPLv3-ad2317?style=for-the-badge)](https://www.gnu.org/licenses/gpl-3.0)
 [![Github](https://shields.io/badge/Github-Source%20Code-181717?style=for-the-badge&logo=github)](https://github.com/Allgeier-Lab/great-lakes-hpc)
 [![Twitter](https://shields.io/badge/Twitter-@AllgeierLab-489ae9?style=for-the-badge&logo=twitter)](https://twitter.com/AllgeierLab)
 [![Homepage](https://shields.io/badge/Homepage-www.jacoballgeier.com-f7cc46?style=for-the-badge&logo=internetexplorer)](https://www.jacoballgeier.com)
 
+:::
+
 <!-- badges: end -->
 
 **All software on the HPC was recently updated (Date: 2022/08/10). So you might need to update some paths and installed software and modules!**
 
-## Get accsess to HPC
+# Get accsess to HPC
 
 First you need to get access to the HPC. For this, use [this link](https://teamdynamix.umich.edu/TDClient/30/Portal/Requests/ServiceDet?ID=42) and complete the form to enable your U-Mich account to login to the HPC.
 
@@ -37,7 +43,7 @@ Once you have an account, use your _Terminal.app_ (on macOS) to login to the HPC
 ssh <username>@greatlakes.arc-ts.umich.edu
 ```
 
-## Setup your HPC account
+# Setup your HPC account
 
 If you use the HPC for the first time, you need to setup a few files and settings to make future uses easier. Luckily, you have to do these steps only once!
 
@@ -75,26 +81,34 @@ The most important alias are all `jobs_*`.
 
 `jobs_kill`: Well...stops all current pending and running jobs submitted by your account
 
+:::{.column-screen-inset-right}
+
 ```{bash aliases}
 ## General HPC/Account information
 
 alias partitions_info='sinfo --sum'
-alias jobs_standard='squeue --partition=standard --format="%.12i %.18j %.8u %.6a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
-alias jobs_largemem='squeue --partition=largemem --format="%.12i %.18j %.8u %.6a  %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
+alias jobs_standard='squeue --partition=standard 
+  --format="%.12i %.18j %.8u %.6a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
+alias jobs_largemem='squeue --partition=largemem 
+  --format="%.12i %.18j %.8u %.6a  %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
 
 alias account_info='sacctmgr show assoc user=$USER format=cluster,account,QOS,user,MaxSubmit,MaxJobs,GrpTRES'
-alias account_usage='sreport -T billing cluster UserUtilizationByAccount account=jeallg0 Start=2021-01-01 End=$NOW Format=Cluster,Login,Account,TresName,Used'
+alias account_usage='sreport -T billing cluster UserUtilizationByAccount 
+  account=jeallg0 Start=2021-01-01 End=$NOW Format=Cluster,Login,Account,TresName,Used'
 
 alias fairshare='sshare -U $USER'
 
 ## Information submitted jobs
 
 alias jobs_own='squeue -u $USER --format="%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
-alias jobs_run='squeue -u $USER --states=RUNNING --format="%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
-alias jobs_pen='squeue -u $USER --states=PENDING --format="%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
+alias jobs_run='squeue -u $USER --states=RUNNING 
+  --format="%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
+alias jobs_pen='squeue -u $USER --states=PENDING 
+  --format="%.21i %.18j %.8u %.7a %.9P %.10l %.10M %.5D %.4C %.7m %16R %.8T"'
 alias jobs_n='echo "Running jobs : $(squeue -u $USER --states=RUNNING --noheader | wc -l)"'
 alias jobs_kill='scancel -u $USER'
-alias jobs_info='sacct -u $USER --units=G --format=JobID,JobName,Account,Partition,Timelimit,Elapsed,AllocNodes,AllocCPU,ReqMem,MaxRSS,State'
+alias jobs_info='sacct -u $USER --units=G 
+  --format=JobID,JobName,Account,Partition,Timelimit,Elapsed,AllocNodes,AllocCPU,ReqMem,MaxRSS,State'
 
 alias jobs_finished='echo "Finished jobs: $(find _rslurm* -type f -name "results_*.RDS" | wc -l)"'
 
@@ -114,6 +128,9 @@ alias ll='ls -lFG'
 
 alias R='R --vanilla'
 ```
+
+:::
+
 Last, you need to create `.bash_modules`. Again, type `nano .bash_modules` and copy the following text before exit/saving the file. This makes sure, each time you use the HPC some pre-installed software libraries are available (such as e.g. `R`). You probably want to load `gcc` and `R`. Depending on the analyses you run, you might need more modules (e.g., `gdal`, `proj`, or `geos`). You can use `module avail` on the HPC to show all options.
 
 ```{bash modules}
@@ -123,13 +140,13 @@ module load gcc/10.3.0
 module load R/4.2.0
 ```
 
-## Install R packages on the HPC
+# Install R packages on the HPC
 
 You need to install all `R` packages that you want to use on the HPC once. For this, login to the HPC and start a `R` session in the _Terminal_ by typing `R` (make sure you loaded the corresponding module). Now, simply run `install.packages(c("package_name_1, package_name_2"))` to install all packages you need. The first time you run the command, it might prompt you a question if you want to create your own libraries folder. Say yes to this. Also, you need to select a CRAN mirror. Just pick any number during the corresponding prompt message. You need to re-do this step each time you want to run some code with a new package you have not installed previously. Once you have installed all packages, exit the `R` session by typing `q()` (...and do not save your workspace image by pressing `n`...).
 
 That's so far everything we need to setup on the HPC! The next steps are on your local disk again.
 
-## rslurm template (can be skipped)
+# rslurm template (can be skipped)
 
 ```{bash rslurm_template}
 #!/bin/bash
@@ -149,7 +166,7 @@ That's so far everything we need to setup on the HPC! The next steps are on your
 {{{rscript}}} --vanilla slurm_run.R
 ```
 
-## Preparing rslurm_template for submission (can be skipped)
+# Preparing rslurm_template for submission (can be skipped)
 
 (1. make sure that `rslurm_template` is in a folder on your local disk)
 
@@ -169,7 +186,9 @@ Move back to your home directory by just typing `cd` and check if all jobs are e
 
 If jobs fail with an error (see `jobs_info`), navigate back to the `_rslurm_*` folder using `cd <foldername>` again and list all files using the `ll` command. There should be either one (or several) `*.out` or `*.log` files (e.g. `slurm_1.out` or `error.log`). Print these files on the console by typing `cat <filename>` (e.g., `cat slurm_1.out`) and check why the job failed. Try to fix the issue. Alternativly, you can also download these log files to your computer using _FileZilla_ or _CyberDuck_ and open them with a text editor software.
 
-## Code example
+# Code example
+
+:::{.column-page-right}
 
 ```{r eval = FALSE}
 z <- 1.5
@@ -186,6 +205,8 @@ sjob <- slurm_apply(f = fx, params = par_df, y = 10, jobname = 'my_first_test',
                                          "mem-per-cpu" = "7G"),
                     global_objects = c("z"), pkgs = c("purrr", "dplyr"), submit = FALSE)
 ```
+
+:::
 
 # Completed jobs
 
