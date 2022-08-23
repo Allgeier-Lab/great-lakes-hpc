@@ -6,22 +6,26 @@ on:
 name: Render and Publish
 
 jobs:
-  build-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v3
-        
-      - name: Set up Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
-        
-      - name: render index.qmd
-        run: quarto render index.qmd
-
-      - name: Commit index.html
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git add index.html
-          git commit -m "Re-build index.html" || echo "No changes to commit"
-          git push origin || echo "No changes to commit"
+  render-quarto:
+    build-deploy:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Check out repository
+          uses: actions/checkout@v3
+          
+        - name: Set up Quarto
+          uses: quarto-dev/quarto-actions/setup@v2
+          
+        - name: Install rmarkdown
+          run: Rscript -e 'install.packages(c("rmarkdown", "prettydoc"))'
+          
+        - name: render index.qmd
+          run: quarto render index.qmd
+  
+        - name: Commit index.html
+          run: |
+            git config --local user.email "actions@github.com"
+            git config --local user.name "GitHub Actions"
+            git add index.html
+            git commit -m "Re-build index.html" || echo "No changes to commit"
+            git push origin || echo "No changes to commit"
