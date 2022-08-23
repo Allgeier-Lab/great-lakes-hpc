@@ -14,11 +14,16 @@ jobs:
         
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
-        run: |
-          quarto --version
-          
-      - name: Render Quarto Project
-        uses: quarto-dev/quarto-actions/render@v2
         with:
-          to: html # If set, it will be equivalent to `quarto render --to html`
-          path: source-folder # By default, the current working dir is used i.e `quarto render .`
+          # To install LaTeX to build PDF book 
+          tinytex: true 
+          # uncomment below and fill to pin a version
+          # version: 0.9.600
+          
+      - name: Publish to GitHub Pages (and render)
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # this secret is always available for github actions
+      
