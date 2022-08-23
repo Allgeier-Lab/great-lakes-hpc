@@ -3,11 +3,8 @@ title: "How to use the Great Lakes High Performance Cluster"
 author:
   - Katrina S. Munsterman
   - Maximilian H.K. Hesselbarth
-output:
-  prettydoc::html_pretty:
-    theme: leonids
-    highlight: github
 date: "`r Sys.Date()`"
+format: html
 ---
 
 ```{r setup, include=FALSE}
@@ -16,10 +13,14 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 
 <!-- badges: start -->
 
+:::{.column-page}
+
 [![License: GPL v3](https://shields.io/badge/License-GPLv3-ad2317?style=for-the-badge)](https://www.gnu.org/licenses/gpl-3.0)
 [![Github](https://shields.io/badge/Github-Source%20Code-181717?style=for-the-badge&logo=github)](https://github.com/Allgeier-Lab/great-lakes-hpc)
 [![Twitter](https://shields.io/badge/Twitter-@AllgeierLab-489ae9?style=for-the-badge&logo=twitter)](https://twitter.com/AllgeierLab)
 [![Homepage](https://shields.io/badge/Homepage-www.jacoballgeier.com-f7cc46?style=for-the-badge&logo=internetexplorer)](https://www.jacoballgeier.com)
+
+:::
 
 <!-- badges: end -->
 
