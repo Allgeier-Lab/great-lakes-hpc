@@ -14,7 +14,10 @@ jobs:
         
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
-      
+        
+      - name: Install packages
+        run: Rscript -e 'install.packages("jsonlite")'
+
       - name: "Quarto render"
         shell: bash
         run: |
