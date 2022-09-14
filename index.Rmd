@@ -29,7 +29,7 @@ knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 
 First you need to get access to the High Performance Cluster (HPC). For this, use [this link](https://teamdynamix.umich.edu/TDClient/30/Portal/Requests/ServiceDet?ID=42) and complete the form to enable your U-Mich account to login to the HPC.
 
-Also, talk to your PI about which funding to use. They can additionally send an e-mail to the support team to add your account to the [U-M Research Computing Package](https://arc.umich.edu/umrcp/) which allows to use a certain amount of free-of-cost minutes. Maybe you are even eligible for your own free-of-costs minutes (ask the GreatLakes support people to find out!).
+Also, talk to your PI about which funding to use. They can additionally send an e-mail to the support team to add your account to the [U-M Research Computing Package](https://arc.umich.edu/umrcp/) which allows to use a certain amount of free-of-cost minutes. Maybe you are even eligible for your own free-of-costs minutes (ask the Great Lakes support people to find out!).
 
 Once you have an account, use your _Terminal.app_ (on macOS) to login to the HPC. For this use the following line. When asked to type your password, the cursor will not move! Make sure to have your 2-factor authentication ready (_DuoMobile_). In case you are not on Campus, use a [VPN](https://its.umich.edu/enterprise/wifi-networks/vpn/getting-started).
 
