@@ -121,6 +121,8 @@ Last, you need to create `.bash_modules`. Again, type `nano .bash_modules` and c
 
 module load gcc/10.3.0
 module load R/4.2.0
+
+## Add further modules you might need
 ```
 
 ## Install R packages on the HPC
