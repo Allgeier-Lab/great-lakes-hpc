@@ -169,7 +169,7 @@ Move back to your home directory by just typing `cd` and check if all jobs are e
 
 # If jobs fail...which they probably will...
 
-If jobs fail with an error (see `jobs_info`), navigate back to the `_rslurm_*` folder using `cd <foldername>` again and list all files using the `ll` command. There should be either one (or several) `*.out` or `*.log` files (e.g. `slurm_1.out` or `error.log`). Print these files on the console by typing `cat <filename>` (e.g., `cat slurm_1.out`) and check why the job failed. Try to fix the issue. Alternativly, you can also download these log files to your computer using _FileZilla_ or _CyberDuck_ and open them with a text editor software.
+If jobs fail with an error (see `jobs_info`), navigate back to the `_rslurm_*` folder using `cd <foldername>` again and list all files using the `ll` command. There should be either one (or several) `*.out` or `*.log` files (e.g. `slurm_1.out` or `error.log`). Print these files on the console by typing `cat <filename>` (e.g., `cat slurm_1.out`) and check why the job failed. Try to fix the issue. Alternativly, you can also download the log files to your computer using _FileZilla_ or _CyberDuck_ and open them with a text editor software.
 
 ## Code example
 
