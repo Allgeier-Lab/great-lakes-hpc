@@ -193,6 +193,6 @@ sjob <- slurm_apply(f = fx, params = par_df, y = 10, jobname = 'my_first_test',
 
 If you didn't write directly into your home directory in your cluster function, copy the entire `_rslurm_*` folder to your local disk by replacing the original folder using _FileZilla_ or _CyberDuck_. Then, you can use `get_slurm_out(sjob, "raw")` to collect the results in the same `R` session.
 
-If you wrote the results directly into your home directory, just collect the results yourself by downloading them using _FileZilla_ or _CyberDuck_. Make sure to save all files you want to keep on your disk.
+If you wrote the results directly into your home directory, just collect the results yourself by downloading them using _FileZilla_ or _CyberDuck_. Make sure to save all files you want to keep on your local disk.
 
 Make sure to delete all `_rslurm_*` folders (on the HPC and locally) once you have all results saved on your disk.
