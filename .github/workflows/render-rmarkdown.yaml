@@ -21,9 +21,10 @@ jobs:
 
       - uses: r-lib/actions/setup-r@v2
       
-      - uses: r-lib/actions/setup-r-dependencies@v1
-        with:
-          extra-packages: rmarkdown, prettydoc
+      - name: Install dependencies
+        run: |
+          install.packages("rmarkdown")
+          install.packages("prettydoc")
 
       - uses: r-lib/actions/setup-renv@v2
       
