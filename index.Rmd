@@ -177,7 +177,7 @@ If jobs fail with an error (see `jobs_info`), navigate back to the `_rslurm_*` f
 z <- 1.5
 fx = function(x, y) (x * 2 + y) ^ z
 
-par_df <- data.frame(x = 1:5)
+par_df <- data.frame(x = 1:10)
 
 sjob <- slurm_apply(f = fx, params = par_df, y = 10, jobname = 'my_first_test',
                     nodes = nrow(par_df), cpus_per_node = 1,
